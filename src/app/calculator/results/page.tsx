@@ -91,7 +91,7 @@ function ResultsContent() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold mb-2">Your ROI Results</h1>
+          <h1 className="font-heading text-3xl font-bold mb-2">Your ROI Results</h1>
           <p className="text-muted-foreground">
             Based on your inputs, here&apos;s your projected return on investment with
             Appmixer

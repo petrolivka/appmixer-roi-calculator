@@ -74,7 +74,7 @@ export function WizardContainer() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold mb-2">ROI Calculator</h1>
+          <h1 className="font-heading text-3xl font-bold mb-2">ROI Calculator</h1>
           <p className="text-muted-foreground">
             Calculate your potential savings with Appmixer
           </p>
@@ -112,7 +112,7 @@ export function WizardContainer() {
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
                 ) : (
-                  <Button onClick={handleViewResults} className="bg-green-600 hover:bg-green-700">
+                  <Button onClick={handleViewResults}>
                     <BarChart3 className="mr-2 h-4 w-4" />
                     View Results
                   </Button>
@@ -129,12 +129,12 @@ export function WizardContainer() {
 
         {/* Mobile Preview Summary */}
         <div className="lg:hidden mt-6">
-          <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
+          <Card className="bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">Projected ROI</p>
-                  <p className="text-2xl font-bold text-green-600">
+                  <p className="text-2xl font-bold text-primary">
                     {results.roiMetrics.roiPercentage}%
                   </p>
                 </div>

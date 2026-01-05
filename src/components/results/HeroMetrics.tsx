@@ -18,51 +18,51 @@ export function HeroMetrics({ metrics, currency }: HeroMetricsProps) {
       value: `${metrics.roiPercentage}%`,
       description: "Return on investment over 3 years",
       icon: TrendingUp,
-      color: "green",
+      color: "primary",
     },
     {
       title: "Payback Period",
       value: `${metrics.paybackPeriodMonths.toFixed(1)} mo`,
       description: "Time to recover your investment",
       icon: Clock,
-      color: "blue",
+      color: "slate",
     },
     {
       title: "3-Year Savings",
       value: formatCurrency(metrics.threeYearSavings, currency, { compact: true }),
       description: "Total cost savings vs. custom build",
       icon: PiggyBank,
-      color: "purple",
+      color: "emerald",
     },
     {
       title: "Break-Even",
       value: `Month ${metrics.breakEvenMonth}`,
       description: "When savings exceed Appmixer costs",
       icon: Target,
-      color: "orange",
+      color: "amber",
     },
   ];
 
   const colorClasses = {
-    green: {
-      bg: "bg-green-100",
-      text: "text-green-600",
-      icon: "text-green-600",
+    primary: {
+      bg: "bg-primary/10",
+      text: "text-primary",
+      icon: "text-primary",
     },
-    blue: {
-      bg: "bg-blue-100",
-      text: "text-blue-600",
-      icon: "text-blue-600",
+    slate: {
+      bg: "bg-slate-100",
+      text: "text-slate-700",
+      icon: "text-slate-600",
     },
-    purple: {
-      bg: "bg-purple-100",
-      text: "text-purple-600",
-      icon: "text-purple-600",
+    emerald: {
+      bg: "bg-emerald-100",
+      text: "text-emerald-600",
+      icon: "text-emerald-600",
     },
-    orange: {
-      bg: "bg-orange-100",
-      text: "text-orange-600",
-      icon: "text-orange-600",
+    amber: {
+      bg: "bg-amber-100",
+      text: "text-amber-600",
+      icon: "text-amber-600",
     },
   };
 
