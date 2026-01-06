@@ -170,6 +170,11 @@ function ResultsContent() {
           <p className="mt-1">
             Actual results may vary based on your specific implementation and usage patterns.
           </p>
+          <p className="mt-3">
+            <a href="/methodology" className="text-primary hover:underline font-medium">
+              View our calculation methodology
+            </a>
+          </p>
         </div>
       </div>
     </div>

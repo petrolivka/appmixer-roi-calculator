@@ -144,6 +144,11 @@ export default function Home() {
             Industry benchmarks sourced from Nucleus Research, Informatica, and
             Gartner.
           </p>
+          <p className="mt-2">
+            <Link href="/methodology" className="text-primary hover:underline">
+              View our calculation methodology
+            </Link>
+          </p>
         </div>
       </footer>
     </main>
