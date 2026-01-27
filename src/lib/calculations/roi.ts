@@ -67,8 +67,13 @@ function calculateBreakEvenMonth(
 ): number {
   const monthlyProjection = generateMonthlyProjection(customBuildCosts, appmixerCosts);
 
+  // Break-even is when cumulative savings cover the total Appmixer investment
+  // (implementation cost + annual platform subscription)
+  const appmixerInvestment =
+    appmixerCosts.implementationCost + appmixerCosts.platformSubscription;
+
   for (const point of monthlyProjection) {
-    if (point.customBuildCumulative > point.appmixerCumulative) {
+    if (point.savings >= appmixerInvestment) {
       return point.month;
     }
   }

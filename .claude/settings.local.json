@@ -13,7 +13,8 @@
       "Bash(node --version:*)",
       "Bash(npx @next/codemod@canary upgrade latest)",
       "Bash(npx @next/codemod@canary upgrade latest --force)",
-      "WebFetch(domain:appmixer.com)"
+      "WebFetch(domain:appmixer.com)",
+      "Bash(npx tsc:*)"
     ]
   }
 }
