@@ -2,6 +2,8 @@
 
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState, useCallback, Suspense } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { HeroMetrics } from "@/components/results/HeroMetrics";
 import { CostComparisonChart } from "@/components/results/CostComparisonChart";
@@ -90,6 +92,19 @@ function ResultsContent() {
 
   return (
     <div className="min-h-screen bg-mesh-gradient">
+      <header className="border-b bg-white/70 backdrop-blur-xl dark:bg-white/5">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+          <Link href="/">
+            <Image src="/logo.svg" alt="Appmixer" width={140} height={40} priority />
+          </Link>
+          <Link
+            href="/calculator"
+            className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          >
+            Back to Calculator
+          </Link>
+        </div>
+      </header>
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <motion.div

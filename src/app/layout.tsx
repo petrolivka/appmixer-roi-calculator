@@ -18,6 +18,10 @@ export const metadata: Metadata = {
   description:
     "Calculate your return on investment with Appmixer integration platform. Compare build vs. buy costs and see your potential savings.",
   keywords: ["ROI calculator", "iPaaS", "integration platform", "Appmixer", "build vs buy"],
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

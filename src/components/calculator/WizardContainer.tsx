@@ -1,6 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -73,6 +75,13 @@ export function WizardContainer() {
 
   return (
     <div className="min-h-screen bg-mesh-gradient">
+      <header className="border-b bg-white/70 backdrop-blur-xl dark:bg-white/5">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+          <Link href="/">
+            <Image src="/logo.svg" alt="Appmixer" width={140} height={40} priority />
+          </Link>
+        </div>
+      </header>
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <motion.div

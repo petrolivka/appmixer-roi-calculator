@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,19 @@ export const metadata = {
 export default function MethodologyPage() {
   return (
     <div className="min-h-screen bg-muted/30">
+      <header className="border-b bg-white/70 backdrop-blur-xl dark:bg-white/5">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+          <Link href="/">
+            <Image src="/logo.svg" alt="Appmixer" width={140} height={40} priority />
+          </Link>
+          <Link
+            href="/calculator"
+            className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          >
+            Open Calculator
+          </Link>
+        </div>
+      </header>
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="mb-8">

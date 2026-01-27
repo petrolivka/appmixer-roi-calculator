@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { fadeInUp, staggerContainer, staggerItem } from "@/lib/animations";
@@ -7,6 +8,21 @@ import { fadeInUp, staggerContainer, staggerItem } from "@/lib/animations";
 export default function Home() {
   return (
     <main className="min-h-screen">
+      {/* Header */}
+      <header className="border-b bg-white/70 backdrop-blur-xl dark:bg-white/5">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+          <Link href="/">
+            <Image src="/logo.svg" alt="Appmixer" width={140} height={40} priority />
+          </Link>
+          <Link
+            href="/calculator"
+            className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          >
+            Open Calculator
+          </Link>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="relative bg-mesh-gradient py-20 lg:py-32 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
