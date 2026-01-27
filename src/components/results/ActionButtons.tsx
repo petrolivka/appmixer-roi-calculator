@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Download, Calendar, Share2, ArrowLeft } from "lucide-react";
@@ -18,31 +19,38 @@ export function ActionButtons({ onDownloadPdf, onShare, isGeneratingPdf }: Actio
   };
 
   return (
-    <Card>
+    <Card variant="glass">
       <CardContent className="p-6">
         <div className="flex flex-col sm:flex-row gap-3">
-          <Button
-            onClick={onDownloadPdf}
-            disabled={isGeneratingPdf}
-            className="flex-1"
-          >
-            <Download className="mr-2 h-4 w-4" />
-            {isGeneratingPdf ? "Generating..." : "Download PDF Report"}
-          </Button>
+          <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button
+              variant="gradient"
+              onClick={onDownloadPdf}
+              disabled={isGeneratingPdf}
+              className="w-full"
+            >
+              <Download className="mr-2 h-4 w-4" />
+              {isGeneratingPdf ? "Generating..." : "Download PDF Report"}
+            </Button>
+          </motion.div>
 
-          <Button
-            variant="outline"
-            onClick={handleScheduleDemo}
-            className="flex-1"
-          >
-            <Calendar className="mr-2 h-4 w-4" />
-            Schedule Demo
-          </Button>
+          <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button
+              variant="outline"
+              onClick={handleScheduleDemo}
+              className="w-full"
+            >
+              <Calendar className="mr-2 h-4 w-4" />
+              Schedule Demo
+            </Button>
+          </motion.div>
 
-          <Button variant="outline" onClick={onShare} className="flex-1">
-            <Share2 className="mr-2 h-4 w-4" />
-            Share Results
-          </Button>
+          <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button variant="outline" onClick={onShare} className="w-full">
+              <Share2 className="mr-2 h-4 w-4" />
+              Share Results
+            </Button>
+          </motion.div>
         </div>
 
         <div className="mt-4 pt-4 border-t">

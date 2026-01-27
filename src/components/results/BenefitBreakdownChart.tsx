@@ -1,10 +1,12 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import type { BenefitBreakdown } from "@/types/results";
 import type { Currency } from "@/types/calculator";
 import { formatCurrency } from "@/lib/currency";
+import { chartReveal } from "@/lib/animations";
 
 interface BenefitBreakdownChartProps {
   benefits: BenefitBreakdown;
@@ -40,65 +42,72 @@ export function BenefitBreakdownChart({ benefits, currency }: BenefitBreakdownCh
   const formatTooltip = (value: number) => formatCurrency(value, currency);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Benefit Breakdown</CardTitle>
-        <CardDescription>
-          Where your savings come from — Total: {formatCurrency(benefits.total, currency)}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={100}
-                paddingAngle={2}
-                dataKey="value"
-                label={({ name, percent }) =>
-                  `${name} (${(percent * 100).toFixed(0)}%)`
-                }
-                labelLine={false}
-              >
-                {data.map((_, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip
-                formatter={formatTooltip}
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+    <motion.div
+      variants={chartReveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px" }}
+    >
+      <Card variant="glass">
+        <CardHeader>
+          <CardTitle>Benefit Breakdown</CardTitle>
+          <CardDescription>
+            Where your savings come from — Total: {formatCurrency(benefits.total, currency)}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={100}
+                  paddingAngle={2}
+                  dataKey="value"
+                  label={({ name, percent }) =>
+                    `${name} (${(percent * 100).toFixed(0)}%)`
+                  }
+                  labelLine={false}
+                >
+                  {data.map((_, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip
+                  formatter={formatTooltip}
+                  contentStyle={{
+                    backgroundColor: "hsl(var(--card))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: "8px",
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
 
-        {/* Legend */}
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          {data.map((item, index) => (
-            <div key={item.name} className="flex items-center gap-2 text-sm">
-              <div
-                className="h-3 w-3 rounded-full"
-                style={{ backgroundColor: COLORS[index % COLORS.length] }}
-              />
-              <span className="text-muted-foreground">{item.name}</span>
-              <span className="ml-auto font-medium">
-                {formatCurrency(item.value, currency, { compact: true })}
-              </span>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+          {/* Legend */}
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            {data.map((item, index) => (
+              <div key={item.name} className="flex items-center gap-2 text-sm">
+                <div
+                  className="h-3 w-3 rounded-full"
+                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                />
+                <span className="text-muted-foreground">{item.name}</span>
+                <span className="ml-auto font-medium">
+                  {formatCurrency(item.value, currency, { compact: true })}
+                </span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }

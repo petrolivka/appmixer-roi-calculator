@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
   BarChart,
@@ -13,7 +14,8 @@ import {
 } from "recharts";
 import type { CustomBuildCosts, AppmixerCosts } from "@/types/results";
 import type { Currency } from "@/types/calculator";
-import { formatCurrency, CURRENCY_SYMBOLS } from "@/lib/currency";
+import { formatCurrency } from "@/lib/currency";
+import { chartReveal } from "@/lib/animations";
 
 interface CostComparisonChartProps {
   customBuildCosts: CustomBuildCosts;
@@ -49,49 +51,57 @@ export function CostComparisonChart({
     formatCurrency(value, currency, { compact: true });
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Cost Comparison</CardTitle>
-        <CardDescription>Annual costs: Custom Build vs. Appmixer</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="h-[300px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-              <XAxis dataKey="name" className="text-sm" />
-              <YAxis tickFormatter={formatYAxis} className="text-sm" />
-              <Tooltip
-                formatter={formatTooltip}
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: "8px",
-                }}
-              />
-              <Legend />
-              <Bar dataKey="Custom Build" fill="hsl(var(--chart-5))" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="Appmixer" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+    <motion.div
+      className="h-full"
+      variants={chartReveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px" }}
+    >
+      <Card variant="glass" className="h-full">
+        <CardHeader>
+          <CardTitle>Cost Comparison</CardTitle>
+          <CardDescription>Annual costs: Custom Build vs. Appmixer</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                <XAxis dataKey="name" className="text-sm" />
+                <YAxis tickFormatter={formatYAxis} className="text-sm" />
+                <Tooltip
+                  formatter={formatTooltip}
+                  contentStyle={{
+                    backgroundColor: "hsl(var(--card))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: "8px",
+                  }}
+                />
+                <Legend />
+                <Bar dataKey="Custom Build" fill="hsl(var(--chart-5))" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Appmixer" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
 
-        {/* Summary */}
-        <div className="mt-6 grid grid-cols-2 gap-4 rounded-lg bg-muted/50 p-4">
-          <div>
-            <p className="text-sm text-muted-foreground">Custom Build Total</p>
-            <p className="text-xl font-bold text-red-600">
-              {formatCurrency(customBuildCosts.yearlyBreakdown.total, currency)}
-            </p>
+          {/* Summary */}
+          <div className="mt-6 grid grid-cols-2 gap-4 rounded-lg bg-muted/50 p-4">
+            <div>
+              <p className="text-sm text-muted-foreground">Custom Build Total</p>
+              <p className="text-xl font-bold text-red-600">
+                {formatCurrency(customBuildCosts.yearlyBreakdown.total, currency)}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Appmixer Total</p>
+              <p className="text-xl font-bold text-blue-600">
+                {formatCurrency(appmixerCosts.yearlyBreakdown.total, currency)}
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Appmixer Total</p>
-            <p className="text-xl font-bold text-blue-600">
-              {formatCurrency(appmixerCosts.yearlyBreakdown.total, currency)}
-            </p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }

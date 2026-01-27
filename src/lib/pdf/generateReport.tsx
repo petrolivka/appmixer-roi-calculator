@@ -10,156 +10,286 @@ import type { CalculatorInputs } from "@/types/calculator";
 import type { CalculationResults } from "@/types/results";
 import { CURRENCY_SYMBOLS } from "@/lib/currency";
 
-// Create styles
+// Appmixer brand palette (matching the app)
+const colors = {
+  primary: "#F3153C",
+  primaryLight: "#FFF1F2",
+  primaryMuted: "#FECDD3",
+  rose: "#E11D48",
+  emerald: "#10B981",
+  emeraldDark: "#065F46",
+  emeraldLight: "#D1FAE5",
+  red: "#DC2626",
+  amber: "#F59E0B",
+  amberLight: "#FEF3C7",
+  foreground: "#1A1A2E",
+  muted: "#64748B",
+  mutedLight: "#94A3B8",
+  border: "#E2E8F0",
+  borderLight: "#F1F5F9",
+  background: "#FFFFFF",
+  backgroundAlt: "#F8FAFC",
+  white: "#FFFFFF",
+};
+
 const styles = StyleSheet.create({
   page: {
     padding: 40,
     fontFamily: "Helvetica",
     fontSize: 10,
-    color: "#1a1a1a",
+    color: colors.foreground,
+    backgroundColor: colors.background,
   },
+
+  // Header
   header: {
-    marginBottom: 30,
-    borderBottomWidth: 2,
-    borderBottomColor: "#2563eb",
-    paddingBottom: 15,
+    marginBottom: 28,
+    paddingBottom: 16,
+    borderBottomWidth: 3,
+    borderBottomColor: colors.primary,
+  },
+  headerAccent: {
+    width: 50,
+    height: 4,
+    backgroundColor: colors.rose,
+    borderRadius: 2,
+    marginBottom: 12,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
-    color: "#2563eb",
-    marginBottom: 5,
+    color: colors.primary,
+    marginBottom: 4,
+    letterSpacing: -0.5,
   },
   subtitle: {
-    fontSize: 12,
-    color: "#666",
+    fontSize: 11,
+    color: colors.muted,
   },
+  dateBadge: {
+    marginTop: 8,
+    backgroundColor: colors.primaryLight,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    alignSelf: "flex-start",
+  },
+  dateBadgeText: {
+    fontSize: 9,
+    color: colors.primary,
+    fontWeight: "bold",
+  },
+
+  // Sections
   section: {
-    marginBottom: 25,
+    marginBottom: 22,
   },
   sectionTitle: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "bold",
+    color: colors.foreground,
     marginBottom: 10,
-    color: "#1a1a1a",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e5e5e5",
-    paddingBottom: 5,
+    paddingBottom: 6,
+    paddingLeft: 10,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.primary,
   },
+
+  // Metric cards
   metricsRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 15,
+    gap: 10,
+    marginBottom: 10,
   },
   metricBox: {
-    width: "23%",
-    backgroundColor: "#f8fafc",
-    padding: 12,
-    borderRadius: 4,
+    flex: 1,
+    backgroundColor: colors.backgroundAlt,
+    padding: 14,
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#e2e8f0",
+    borderColor: colors.border,
+  },
+  metricBoxHighlight: {
+    flex: 1,
+    backgroundColor: colors.primaryLight,
+    padding: 14,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.primaryMuted,
   },
   metricLabel: {
-    fontSize: 9,
-    color: "#64748b",
+    fontSize: 8,
+    color: colors.muted,
     marginBottom: 4,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
   },
   metricValue: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
-    color: "#2563eb",
+    color: colors.primary,
   },
+  metricValueAlt: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.foreground,
+  },
+  metricValueGreen: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.emerald,
+  },
+  metricValueAmber: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.amber,
+  },
+
+  // Tables
   table: {
-    marginTop: 10,
+    marginTop: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.border,
+    overflow: "hidden",
   },
   tableRow: {
     flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: "#e5e5e5",
-    paddingVertical: 8,
+    borderBottomColor: colors.borderLight,
+    paddingVertical: 9,
+    paddingHorizontal: 10,
   },
   tableHeader: {
-    backgroundColor: "#f8fafc",
+    backgroundColor: colors.backgroundAlt,
+    borderBottomColor: colors.border,
+  },
+  tableHeaderText: {
+    fontSize: 9,
     fontWeight: "bold",
+    color: colors.muted,
+    textTransform: "uppercase",
+    letterSpacing: 0.3,
   },
   tableCell: {
     flex: 1,
-    paddingHorizontal: 5,
   },
   tableCellRight: {
     flex: 1,
     textAlign: "right",
-    paddingHorizontal: 5,
   },
+  tableTotalRow: {
+    flexDirection: "row",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    backgroundColor: colors.backgroundAlt,
+    borderBottomWidth: 0,
+  },
+
+  // Savings summary
   summaryBox: {
-    backgroundColor: "#dcfce7",
-    padding: 15,
-    borderRadius: 4,
-    marginTop: 15,
+    backgroundColor: colors.emeraldLight,
+    padding: 16,
+    borderRadius: 8,
+    marginTop: 14,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#A7F3D0",
   },
   summaryLabel: {
     fontSize: 12,
     fontWeight: "bold",
-    color: "#166534",
+    color: colors.emeraldDark,
   },
   summaryValue: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
-    color: "#166534",
+    color: colors.emerald,
   },
+
+  // Assumptions
   assumptions: {
-    backgroundColor: "#f8fafc",
-    padding: 15,
-    borderRadius: 4,
+    backgroundColor: colors.backgroundAlt,
+    padding: 14,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   assumptionRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 4,
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.borderLight,
+  },
+  assumptionRowLast: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 5,
+    borderBottomWidth: 0,
   },
   assumptionLabel: {
-    color: "#64748b",
+    color: colors.muted,
+    fontSize: 10,
   },
   assumptionValue: {
     fontWeight: "bold",
+    fontSize: 10,
   },
+
+  // CTA
+  ctaSection: {
+    backgroundColor: colors.primary,
+    padding: 22,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  ctaTitle: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: colors.white,
+    marginBottom: 6,
+  },
+  ctaText: {
+    color: colors.white,
+    fontSize: 10,
+    opacity: 0.9,
+  },
+  ctaLink: {
+    color: colors.white,
+    fontSize: 10,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+
+  // Footer
   footer: {
     position: "absolute",
     bottom: 30,
     left: 40,
     right: 40,
     textAlign: "center",
-    color: "#94a3b8",
+    color: colors.mutedLight,
     fontSize: 8,
     borderTopWidth: 1,
-    borderTopColor: "#e5e5e5",
+    borderTopColor: colors.border,
     paddingTop: 10,
-  },
-  ctaSection: {
-    backgroundColor: "#2563eb",
-    padding: 20,
-    borderRadius: 4,
-    marginTop: 20,
-  },
-  ctaTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#ffffff",
-    marginBottom: 5,
-  },
-  ctaText: {
-    color: "#ffffff",
-    fontSize: 10,
   },
   pageNumber: {
     position: "absolute",
     bottom: 15,
     right: 40,
     fontSize: 8,
-    color: "#94a3b8",
+    color: colors.mutedLight,
+  },
+
+  // Divider
+  divider: {
+    height: 1,
+    backgroundColor: colors.border,
+    marginVertical: 14,
   },
 });
 
@@ -193,42 +323,45 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
       {/* Page 1: Executive Summary */}
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
+          <View style={styles.headerAccent} />
           <Text style={styles.title}>ROI Analysis Report</Text>
           <Text style={styles.subtitle}>
             Appmixer Integration Platform vs. Custom Build
           </Text>
-          <Text style={[styles.subtitle, { marginTop: 5 }]}>
-            Generated: {new Date().toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </Text>
+          <View style={styles.dateBadge}>
+            <Text style={styles.dateBadgeText}>
+              {new Date().toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </Text>
+          </View>
         </View>
 
         {/* Executive Summary Metrics */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Executive Summary</Text>
           <View style={styles.metricsRow}>
-            <View style={styles.metricBox}>
+            <View style={styles.metricBoxHighlight}>
               <Text style={styles.metricLabel}>Total ROI</Text>
               <Text style={styles.metricValue}>{roiMetrics.roiPercentage}%</Text>
             </View>
             <View style={styles.metricBox}>
               <Text style={styles.metricLabel}>Payback Period</Text>
-              <Text style={styles.metricValue}>
+              <Text style={styles.metricValueAlt}>
                 {roiMetrics.paybackPeriodMonths.toFixed(1)} mo
               </Text>
             </View>
             <View style={styles.metricBox}>
               <Text style={styles.metricLabel}>3-Year Savings</Text>
-              <Text style={styles.metricValue}>
+              <Text style={styles.metricValueGreen}>
                 {formatCurrencyCompact(roiMetrics.threeYearSavings, currency)}
               </Text>
             </View>
             <View style={styles.metricBox}>
               <Text style={styles.metricLabel}>Break-Even</Text>
-              <Text style={styles.metricValue}>
+              <Text style={styles.metricValueAmber}>
                 Month {roiMetrics.breakEvenMonth}
               </Text>
             </View>
@@ -240,9 +373,9 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
           <Text style={styles.sectionTitle}>3-Year Cost Comparison</Text>
           <View style={styles.table}>
             <View style={[styles.tableRow, styles.tableHeader]}>
-              <Text style={styles.tableCell}>Cost Category</Text>
-              <Text style={styles.tableCellRight}>Custom Build</Text>
-              <Text style={styles.tableCellRight}>Appmixer</Text>
+              <Text style={[styles.tableCell, styles.tableHeaderText]}>Period</Text>
+              <Text style={[styles.tableCellRight, styles.tableHeaderText]}>Custom Build</Text>
+              <Text style={[styles.tableCellRight, styles.tableHeaderText]}>Appmixer</Text>
             </View>
             <View style={styles.tableRow}>
               <Text style={styles.tableCell}>Year 1</Text>
@@ -271,14 +404,14 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
                 {formatCurrency(appmixerCosts.yearlyBreakdown.year3, currency)}
               </Text>
             </View>
-            <View style={[styles.tableRow, { borderBottomWidth: 2 }]}>
+            <View style={styles.tableTotalRow}>
               <Text style={[styles.tableCell, { fontWeight: "bold" }]}>
                 Total (3 Years)
               </Text>
-              <Text style={[styles.tableCellRight, { fontWeight: "bold", color: "#dc2626" }]}>
+              <Text style={[styles.tableCellRight, { fontWeight: "bold", color: colors.red }]}>
                 {formatCurrency(customBuildCosts.yearlyBreakdown.total, currency)}
               </Text>
-              <Text style={[styles.tableCellRight, { fontWeight: "bold", color: "#2563eb" }]}>
+              <Text style={[styles.tableCellRight, { fontWeight: "bold", color: colors.primary }]}>
                 {formatCurrency(appmixerCosts.yearlyBreakdown.total, currency)}
               </Text>
             </View>
@@ -321,7 +454,7 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
                 {formatCurrency(companyProfile.developerHourlyCost, currency)}/hr
               </Text>
             </View>
-            <View style={styles.assumptionRow}>
+            <View style={styles.assumptionRowLast}>
               <Text style={styles.assumptionLabel}>End-User Facing</Text>
               <Text style={styles.assumptionValue}>
                 {integrationRequirements.endUserFacing ? "Yes" : "No"}
@@ -346,6 +479,7 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
       {/* Page 2: Detailed Breakdown */}
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
+          <View style={styles.headerAccent} />
           <Text style={styles.title}>Detailed Cost Breakdown</Text>
         </View>
 
@@ -354,8 +488,8 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
           <Text style={styles.sectionTitle}>Custom Build Cost Components</Text>
           <View style={styles.table}>
             <View style={[styles.tableRow, styles.tableHeader]}>
-              <Text style={styles.tableCell}>Component</Text>
-              <Text style={styles.tableCellRight}>Amount</Text>
+              <Text style={[styles.tableCell, styles.tableHeaderText]}>Component</Text>
+              <Text style={[styles.tableCellRight, styles.tableHeaderText]}>Amount</Text>
             </View>
             <View style={styles.tableRow}>
               <Text style={styles.tableCell}>Initial Development</Text>
@@ -381,6 +515,12 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
                 {formatCurrency(customBuildCosts.developerOpportunityCost, currency)}
               </Text>
             </View>
+            <View style={styles.tableTotalRow}>
+              <Text style={[styles.tableCell, { fontWeight: "bold" }]}>Total (3 Years)</Text>
+              <Text style={[styles.tableCellRight, { fontWeight: "bold", color: colors.red }]}>
+                {formatCurrency(customBuildCosts.yearlyBreakdown.total, currency)}
+              </Text>
+            </View>
           </View>
         </View>
 
@@ -389,8 +529,8 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
           <Text style={styles.sectionTitle}>Appmixer Cost Components</Text>
           <View style={styles.table}>
             <View style={[styles.tableRow, styles.tableHeader]}>
-              <Text style={styles.tableCell}>Component</Text>
-              <Text style={styles.tableCellRight}>Amount</Text>
+              <Text style={[styles.tableCell, styles.tableHeaderText]}>Component</Text>
+              <Text style={[styles.tableCellRight, styles.tableHeaderText]}>Amount</Text>
             </View>
             <View style={styles.tableRow}>
               <Text style={styles.tableCell}>Implementation (one-time)</Text>
@@ -410,6 +550,12 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
                 {formatCurrency(appmixerCosts.ongoingManagement, currency)}
               </Text>
             </View>
+            <View style={styles.tableTotalRow}>
+              <Text style={[styles.tableCell, { fontWeight: "bold" }]}>Total (3 Years)</Text>
+              <Text style={[styles.tableCellRight, { fontWeight: "bold", color: colors.primary }]}>
+                {formatCurrency(appmixerCosts.yearlyBreakdown.total, currency)}
+              </Text>
+            </View>
           </View>
         </View>
 
@@ -418,8 +564,8 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
           <Text style={styles.sectionTitle}>Projected Benefits</Text>
           <View style={styles.table}>
             <View style={[styles.tableRow, styles.tableHeader]}>
-              <Text style={styles.tableCell}>Benefit Category</Text>
-              <Text style={styles.tableCellRight}>Annual Value</Text>
+              <Text style={[styles.tableCell, styles.tableHeaderText]}>Benefit Category</Text>
+              <Text style={[styles.tableCellRight, styles.tableHeaderText]}>Annual Value</Text>
             </View>
             {benefits.developmentTimeSavings > 0 && (
               <View style={styles.tableRow}>
@@ -469,11 +615,11 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
                 </Text>
               </View>
             )}
-            <View style={[styles.tableRow, { borderBottomWidth: 2 }]}>
+            <View style={styles.tableTotalRow}>
               <Text style={[styles.tableCell, { fontWeight: "bold" }]}>
                 Total Annual Benefits
               </Text>
-              <Text style={[styles.tableCellRight, { fontWeight: "bold", color: "#16a34a" }]}>
+              <Text style={[styles.tableCellRight, { fontWeight: "bold", color: colors.emerald }]}>
                 {formatCurrency(benefits.total, currency)}
               </Text>
             </View>
@@ -486,7 +632,7 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
           <Text style={styles.ctaText}>
             Schedule a demo with our team to see how Appmixer can help you achieve these results.
           </Text>
-          <Text style={[styles.ctaText, { marginTop: 10 }]}>
+          <Text style={styles.ctaLink}>
             Visit: https://appmixer.com/contact
           </Text>
         </View>

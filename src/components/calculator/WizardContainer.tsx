@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProgressIndicator } from "./ProgressIndicator";
@@ -10,6 +11,7 @@ import { IntegrationRequirements } from "./steps/IntegrationRequirements";
 import { CurrentCosts } from "./steps/CurrentCosts";
 import { useCalculator } from "@/hooks/useCalculator";
 import { ChevronLeft, ChevronRight, BarChart3 } from "lucide-react";
+import { slideInFromRight, fadeInUp } from "@/lib/animations";
 
 export function WizardContainer() {
   const router = useRouter();
@@ -70,15 +72,20 @@ export function WizardContainer() {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-mesh-gradient">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="mb-8 text-center">
+        <motion.div
+          className="mb-8 text-center"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+        >
           <h1 className="font-heading text-3xl font-bold mb-2">ROI Calculator</h1>
           <p className="text-muted-foreground">
             Calculate your potential savings with Appmixer
           </p>
-        </div>
+        </motion.div>
 
         <ProgressIndicator
           currentStep={state.currentStep}
@@ -91,9 +98,19 @@ export function WizardContainer() {
 
         <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
           {/* Main Form Area */}
-          <Card>
+          <Card variant="glass">
             <CardContent className="p-6 sm:p-8">
-              {renderStep()}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={state.currentStep}
+                  variants={slideInFromRight}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                >
+                  {renderStep()}
+                </motion.div>
+              </AnimatePresence>
 
               {/* Navigation Buttons */}
               <div className="mt-8 flex items-center justify-between">
@@ -112,7 +129,7 @@ export function WizardContainer() {
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
                 ) : (
-                  <Button onClick={handleViewResults}>
+                  <Button variant="gradient" onClick={handleViewResults}>
                     <BarChart3 className="mr-2 h-4 w-4" />
                     View Results
                   </Button>

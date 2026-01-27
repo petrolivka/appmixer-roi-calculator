@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState, useCallback, Suspense } from "react";
+import { motion } from "motion/react";
 import { HeroMetrics } from "@/components/results/HeroMetrics";
 import { CostComparisonChart } from "@/components/results/CostComparisonChart";
 import { BreakEvenChart } from "@/components/results/BreakEvenChart";
@@ -13,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { calculateROI } from "@/lib/calculations";
 import type { CalculatorInputs } from "@/types/calculator";
 import { defaultCalculatorInputs } from "@/types/calculator";
+import { fadeInUp } from "@/lib/animations";
 
 function ResultsContent() {
   const searchParams = useSearchParams();
@@ -87,32 +89,37 @@ function ResultsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-mesh-gradient">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="mb-8 text-center">
+        <motion.div
+          className="mb-10 text-center"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+        >
           <h1 className="font-heading text-3xl font-bold mb-2">Your ROI Results</h1>
           <p className="text-muted-foreground">
             Based on your inputs, here&apos;s your projected return on investment with
             Appmixer
           </p>
-        </div>
+        </motion.div>
 
         {/* Hero Metrics */}
-        <div className="mb-8">
+        <div className="mb-10">
           <HeroMetrics metrics={results.roiMetrics} currency={inputs.currency} />
         </div>
 
         {/* Main Content with Tabs */}
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs defaultValue="overview" className="space-y-8">
           <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-grid">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="details">Cost Details</TabsTrigger>
             <TabsTrigger value="sensitivity">Sensitivity</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid gap-6 lg:grid-cols-2">
+          <TabsContent value="overview" className="space-y-8">
+            <div className="grid gap-8 lg:grid-cols-2">
               <CostComparisonChart
                 customBuildCosts={results.customBuildCosts}
                 appmixerCosts={results.appmixerCosts}
@@ -139,9 +146,9 @@ function ResultsContent() {
           </TabsContent>
 
           <TabsContent value="sensitivity">
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className="grid gap-8 lg:grid-cols-2">
               <SensitivitySliders inputs={inputs} onUpdate={handleInputUpdate} />
-              <div className="space-y-6">
+              <div className="space-y-8">
                 <CostComparisonChart
                   customBuildCosts={results.customBuildCosts}
                   appmixerCosts={results.appmixerCosts}
@@ -153,7 +160,7 @@ function ResultsContent() {
         </Tabs>
 
         {/* Action Buttons */}
-        <div className="mt-8">
+        <div className="mt-10">
           <ActionButtons
             onDownloadPdf={handleDownloadPdf}
             onShare={handleShare}
@@ -162,7 +169,7 @@ function ResultsContent() {
         </div>
 
         {/* Methodology Note */}
-        <div className="mt-8 text-center text-sm text-muted-foreground">
+        <div className="mt-10 text-center text-sm text-muted-foreground">
           <p>
             Calculations based on industry benchmarks from Nucleus Research, Informatica,
             and Gartner studies.

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
 import { Check } from "lucide-react";
 
 interface ProgressIndicatorProps {
@@ -26,12 +27,16 @@ export function ProgressIndicator({ currentStep, onStepClick }: ProgressIndicato
             <li key={step.number} className="relative flex-1">
               {index !== 0 && (
                 <div
-                  className={cn(
-                    "absolute left-0 top-4 -translate-y-1/2 h-0.5 w-full -translate-x-1/2",
-                    isCompleted ? "bg-primary" : "bg-muted"
-                  )}
+                  className="absolute left-0 top-4 -translate-y-1/2 h-0.5 w-full -translate-x-1/2 bg-muted"
                   aria-hidden="true"
-                />
+                >
+                  <motion.div
+                    className="h-full bg-primary"
+                    initial={{ width: 0 }}
+                    animate={{ width: isCompleted ? "100%" : "0%" }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                  />
+                </div>
               )}
               <button
                 type="button"
@@ -42,20 +47,22 @@ export function ProgressIndicator({ currentStep, onStepClick }: ProgressIndicato
                   onStepClick && currentStep >= step.number && "cursor-pointer"
                 )}
               >
-                <span
+                <motion.span
                   className={cn(
                     "relative z-10 flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium transition-colors",
                     isCompleted && "bg-primary text-primary-foreground",
                     isCurrent && "border-2 border-primary bg-background text-primary",
                     !isCompleted && !isCurrent && "border-2 border-muted bg-background text-muted-foreground"
                   )}
+                  animate={isCurrent ? { scale: [1, 1.15, 1] } : { scale: 1 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                 >
                   {isCompleted ? (
                     <Check className="h-4 w-4" />
                   ) : (
                     step.number
                   )}
-                </span>
+                </motion.span>
                 <span className="mt-2 text-sm font-medium text-foreground hidden sm:block">
                   {step.title}
                 </span>

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { CompanyProfileInputs, CompanySize, IndustryVertical, IntegrationApproach, Currency } from "@/types/calculator";
-import { formatCurrency, CURRENCY_SYMBOLS } from "@/lib/currency";
+import { CURRENCY_SYMBOLS } from "@/lib/currency";
 import { HelpCircle } from "lucide-react";
 import {
   Tooltip,
@@ -18,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { staggerContainer, staggerItem } from "@/lib/animations";
 
 interface CompanyProfileProps {
   data: CompanyProfileInputs;
@@ -53,17 +55,22 @@ const currencyOptions: Currency[] = ["USD", "EUR", "GBP"];
 export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: CompanyProfileProps) {
   return (
     <TooltipProvider>
-      <div className="space-y-6">
-        <div className="space-y-2">
+      <motion.div
+        className="space-y-6"
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div className="space-y-2" variants={staggerItem}>
           <h2 className="text-2xl font-bold">Company Profile</h2>
           <p className="text-muted-foreground">
             Tell us about your organization to personalize your ROI calculation.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid gap-6 sm:grid-cols-2">
           {/* Currency Selection */}
-          <div className="space-y-2">
+          <motion.div className="space-y-2" variants={staggerItem}>
             <Label htmlFor="currency">Currency</Label>
             <Select value={currency} onValueChange={(v) => onCurrencyChange(v as Currency)}>
               <SelectTrigger id="currency">
@@ -77,10 +84,10 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
                 ))}
               </SelectContent>
             </Select>
-          </div>
+          </motion.div>
 
           {/* Company Size */}
-          <div className="space-y-2">
+          <motion.div className="space-y-2" variants={staggerItem}>
             <Label htmlFor="companySize">Company Size</Label>
             <Select
               value={data.companySize}
@@ -97,10 +104,10 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
                 ))}
               </SelectContent>
             </Select>
-          </div>
+          </motion.div>
 
           {/* Industry Vertical */}
-          <div className="space-y-2">
+          <motion.div className="space-y-2" variants={staggerItem}>
             <Label htmlFor="industry">Industry</Label>
             <Select
               value={data.industryVertical}
@@ -117,10 +124,10 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
                 ))}
               </SelectContent>
             </Select>
-          </div>
+          </motion.div>
 
           {/* Number of Developers */}
-          <div className="space-y-2">
+          <motion.div className="space-y-2" variants={staggerItem}>
             <div className="flex items-center gap-2">
               <Label htmlFor="developers">Number of Developers</Label>
               <Tooltip>
@@ -142,10 +149,10 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
                 onUpdate({ numberOfDevelopers: parseInt(e.target.value) || 1 })
               }
             />
-          </div>
+          </motion.div>
 
           {/* Developer Hourly Cost */}
-          <div className="space-y-2">
+          <motion.div className="space-y-2" variants={staggerItem}>
             <div className="flex items-center gap-2">
               <Label htmlFor="hourlyRate">Avg. Developer Hourly Cost</Label>
               <Tooltip>
@@ -176,10 +183,10 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
                 /hour
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Current Integration Approach */}
-          <div className="space-y-2 sm:col-span-2">
+          <motion.div className="space-y-2 sm:col-span-2" variants={staggerItem}>
             <Label>Current Integration Approach</Label>
             <div className="grid gap-3 sm:grid-cols-3">
               {integrationApproachOptions.map((option) => (
@@ -187,9 +194,9 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
                   key={option.value}
                   type="button"
                   onClick={() => onUpdate({ currentIntegrationApproach: option.value })}
-                  className={`flex flex-col items-start p-4 rounded-lg border-2 transition-colors text-left ${
+                  className={`flex flex-col items-start p-4 rounded-lg border-2 transition-all duration-200 text-left ${
                     data.currentIntegrationApproach === option.value
-                      ? "border-primary bg-primary/5"
+                      ? "border-primary bg-primary/5 shadow-sm"
                       : "border-muted hover:border-muted-foreground/50"
                   }`}
                 >
@@ -200,9 +207,9 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </TooltipProvider>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, AnimatePresence } from "motion/react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
@@ -45,7 +46,7 @@ export function SensitivitySliders({ inputs, onUpdate }: SensitivitySlidersProps
   };
 
   return (
-    <Card>
+    <Card variant="glass">
       <CardHeader>
         <CardTitle>Sensitivity Analysis</CardTitle>
         <CardDescription>
@@ -57,9 +58,18 @@ export function SensitivitySliders({ inputs, onUpdate }: SensitivitySlidersProps
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <Label>Developer Hourly Cost</Label>
-            <span className="text-lg font-bold">
-              {CURRENCY_SYMBOLS[inputs.currency]}{companyProfile.developerHourlyCost}/hr
-            </span>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={companyProfile.developerHourlyCost}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.15 }}
+                className="text-lg font-bold"
+              >
+                {CURRENCY_SYMBOLS[inputs.currency]}{companyProfile.developerHourlyCost}/hr
+              </motion.span>
+            </AnimatePresence>
           </div>
           <Slider
             value={[companyProfile.developerHourlyCost]}
@@ -78,9 +88,18 @@ export function SensitivitySliders({ inputs, onUpdate }: SensitivitySlidersProps
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <Label>Number of Integrations</Label>
-            <span className="text-lg font-bold">
-              {integrationRequirements.numberOfIntegrations}
-            </span>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={integrationRequirements.numberOfIntegrations}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.15 }}
+                className="text-lg font-bold"
+              >
+                {integrationRequirements.numberOfIntegrations}
+              </motion.span>
+            </AnimatePresence>
           </div>
           <Slider
             value={[integrationRequirements.numberOfIntegrations]}
@@ -99,9 +118,18 @@ export function SensitivitySliders({ inputs, onUpdate }: SensitivitySlidersProps
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <Label>Integration Complexity</Label>
-            <span className="text-lg font-bold capitalize">
-              {integrationRequirements.integrationComplexity}
-            </span>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={integrationRequirements.integrationComplexity}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.15 }}
+                className="text-lg font-bold capitalize"
+              >
+                {integrationRequirements.integrationComplexity}
+              </motion.span>
+            </AnimatePresence>
           </div>
           <Slider
             value={[complexityIndex]}

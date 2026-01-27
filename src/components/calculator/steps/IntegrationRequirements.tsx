@@ -1,7 +1,7 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -19,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { staggerContainer, staggerItem } from "@/lib/animations";
 
 interface IntegrationRequirementsProps {
   data: IntegrationRequirementsInputs;
@@ -34,17 +35,22 @@ const complexityOptions: { value: IntegrationComplexity; label: string; descript
 export function IntegrationRequirements({ data, onUpdate }: IntegrationRequirementsProps) {
   return (
     <TooltipProvider>
-      <div className="space-y-6">
-        <div className="space-y-2">
+      <motion.div
+        className="space-y-6"
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div className="space-y-2" variants={staggerItem}>
           <h2 className="text-2xl font-bold">Integration Requirements</h2>
           <p className="text-muted-foreground">
             Define your integration needs to calculate development and maintenance costs.
           </p>
-        </div>
+        </motion.div>
 
         <div className="space-y-8">
           {/* Number of Integrations */}
-          <div className="space-y-4">
+          <motion.div className="space-y-4" variants={staggerItem}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Label>Number of Integrations Needed</Label>
@@ -73,10 +79,10 @@ export function IntegrationRequirements({ data, onUpdate }: IntegrationRequireme
               <span>1</span>
               <span>50</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Integration Complexity */}
-          <div className="space-y-3">
+          <motion.div className="space-y-3" variants={staggerItem}>
             <div className="flex items-center gap-2">
               <Label>Integration Complexity</Label>
               <Tooltip>
@@ -94,9 +100,9 @@ export function IntegrationRequirements({ data, onUpdate }: IntegrationRequireme
                   key={option.value}
                   type="button"
                   onClick={() => onUpdate({ integrationComplexity: option.value })}
-                  className={`flex flex-col items-start p-4 rounded-lg border-2 transition-colors text-left ${
+                  className={`flex flex-col items-start p-4 rounded-lg border-2 transition-all duration-200 text-left ${
                     data.integrationComplexity === option.value
-                      ? "border-primary bg-primary/5"
+                      ? "border-primary bg-primary/5 shadow-sm"
                       : "border-muted hover:border-muted-foreground/50"
                   }`}
                 >
@@ -107,10 +113,10 @@ export function IntegrationRequirements({ data, onUpdate }: IntegrationRequireme
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Expected Monthly API Calls */}
-          <div className="space-y-2">
+          <motion.div className="space-y-2" variants={staggerItem}>
             <div className="flex items-center gap-2">
               <Label htmlFor="apiCalls">Expected Monthly API Calls</Label>
               <Tooltip>
@@ -139,10 +145,10 @@ export function IntegrationRequirements({ data, onUpdate }: IntegrationRequireme
                 <SelectItem value="5000000">1,000,000+</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </motion.div>
 
           {/* Toggle Options */}
-          <div className="space-y-4">
+          <motion.div className="space-y-4" variants={staggerItem}>
             <div className="flex items-center justify-between rounded-lg border p-4">
               <div className="space-y-0.5">
                 <div className="flex items-center gap-2">
@@ -194,9 +200,9 @@ export function IntegrationRequirements({ data, onUpdate }: IntegrationRequireme
                 onCheckedChange={(v) => onUpdate({ selfHostedRequired: v })}
               />
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </TooltipProvider>
   );
 }
