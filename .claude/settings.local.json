@@ -15,7 +15,8 @@
       "Bash(npx @next/codemod@canary upgrade latest --force)",
       "WebFetch(domain:appmixer.com)",
       "Bash(npx tsc:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(tree:*)"
     ]
   }
 }
