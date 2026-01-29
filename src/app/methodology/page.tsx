@@ -351,20 +351,30 @@ export default function MethodologyPage() {
             </p>
 
             <div className="space-y-3">
-              <div className="rounded-lg border p-4">
+              <a
+                href="https://nucleusresearch.com/research/single/roi-guidebook-informatica-ipaas/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-lg border p-4 transition-colors hover:bg-muted/50"
+              >
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-semibold">Nucleus Research</h4>
                     <p className="text-sm text-muted-foreground">
-                      iPaaS ROI Guidebook - Reports average iPaaS ROI of 413% with
+                      iPaaS ROI Guidebook — Reports average iPaaS ROI of 413% with
                       payback periods under 4 months.
                     </p>
                   </div>
                   <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
                 </div>
-              </div>
+              </a>
 
-              <div className="rounded-lg border p-4">
+              <a
+                href="https://www.businesswire.com/news/home/20230419005298/en/Informatica-iPaaS-Users-Experience-a-413-ROI-With-an-Average-Payback-of-Fewer-Than-Four-Months-According-to-Nucleus-Research-ROI-Guidebook"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-lg border p-4 transition-colors hover:bg-muted/50"
+              >
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-semibold">Informatica Customer Studies</h4>
@@ -375,32 +385,62 @@ export default function MethodologyPage() {
                   </div>
                   <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
                 </div>
-              </div>
+              </a>
 
-              <div className="rounded-lg border p-4">
+              <a
+                href="https://www.gartner.com/en/documents/5198963"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-lg border p-4 transition-colors hover:bg-muted/50"
+              >
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-semibold">Gartner Magic Quadrant</h4>
                     <p className="text-sm text-muted-foreground">
-                      Enterprise iPaaS 2024 - Industry analysis and vendor comparisons.
+                      Enterprise iPaaS 2024 — Industry analysis and vendor comparisons.
                     </p>
                   </div>
                   <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
                 </div>
-              </div>
+              </a>
 
-              <div className="rounded-lg border p-4">
+              <a
+                href="https://www.fortunebusinessinsights.com/integration-platform-as-a-service-ipaas-market-109835"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-lg border p-4 transition-colors hover:bg-muted/50"
+              >
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-semibold">Fortune Business Insights</h4>
                     <p className="text-sm text-muted-foreground">
-                      iPaaS Market Report 2024-2032 - Market trends and growth
-                      projections.
+                      iPaaS Market Report 2024–2032 — Market trends and growth
+                      projections. Market valued at $12.87B in 2024, projected to reach
+                      $78.28B by 2032.
                     </p>
                   </div>
                   <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
                 </div>
-              </div>
+              </a>
+
+              <a
+                href="https://www.getknit.dev/blog/state-of-saas-integration"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-lg border p-4 transition-colors hover:bg-muted/50"
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h4 className="font-semibold">State of SaaS Integration Report 2025</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Global SaaS integration market trends — 40% increase in user
+                      engagement for platforms offering native integrations and 75% of
+                      business leaders agree integrations enhance business agility.
+                    </p>
+                  </div>
+                  <ExternalLink className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-1" />
+                </div>
+              </a>
             </div>
 
             <div className="rounded-lg bg-primary/5 border border-primary/20 p-4 mt-6">
