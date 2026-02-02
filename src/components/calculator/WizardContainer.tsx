@@ -57,6 +57,7 @@ export function WizardContainer() {
         return (
           <IntegrationRequirements
             data={state.integrationRequirements}
+            currency={state.currency}
             onUpdate={updateIntegrationRequirements}
           />
         );
