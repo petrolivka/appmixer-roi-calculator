@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "upgrade": "next upgrade"
+    "upgrade": "next upgrade",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.8",
@@ -33,15 +36,21 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.9",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.10.2",
     "@types/react": "19.2.10",
     "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "^5.1.3",
     "autoprefixer": "^10.4.23",
     "eslint": "^9.17.0",
     "eslint-config-next": "16.1.5",
+    "jsdom": "^28.0.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^4.0.18"
   },
   "overrides": {
     "@types/react": "19.2.10",
