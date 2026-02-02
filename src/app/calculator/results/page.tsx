@@ -12,6 +12,7 @@ import { BenefitBreakdownChart } from "@/components/results/BenefitBreakdownChar
 import { SensitivitySliders } from "@/components/results/SensitivitySliders";
 import { ActionButtons } from "@/components/results/ActionButtons";
 import { CostBreakdownTable } from "@/components/results/CostBreakdownTable";
+import { CurrentSpendCard } from "@/components/results/CurrentSpendCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { calculateROI } from "@/lib/calculations";
 import type { CalculatorInputs } from "@/types/calculator";
@@ -122,7 +123,11 @@ function ResultsContent() {
 
         {/* Hero Metrics */}
         <div className="mb-10">
-          <HeroMetrics metrics={results.roiMetrics} currency={inputs.currency} />
+          <HeroMetrics
+            metrics={results.roiMetrics}
+            currency={inputs.currency}
+            currentSpendComparison={results.currentSpendComparison}
+          />
         </div>
 
         {/* Main Content with Tabs */}
@@ -134,6 +139,12 @@ function ResultsContent() {
           </TabsList>
 
           <TabsContent value="overview" className="space-y-8">
+            {results.currentSpendComparison.hasCurrentSpend && (
+              <CurrentSpendCard
+                comparison={results.currentSpendComparison}
+                currency={inputs.currency}
+              />
+            )}
             <div className="grid gap-8 lg:grid-cols-2">
               <CostComparisonChart
                 customBuildCosts={results.customBuildCosts}
@@ -157,6 +168,7 @@ function ResultsContent() {
               customBuildCosts={results.customBuildCosts}
               appmixerCosts={results.appmixerCosts}
               currency={inputs.currency}
+              currentSpendComparison={results.currentSpendComparison}
             />
           </TabsContent>
 

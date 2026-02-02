@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { Card, CardContent } from "@/components/ui/card";
-import type { ROIMetrics } from "@/types/results";
+import type { ROIMetrics, CurrentSpendComparison } from "@/types/results";
 import type { Currency } from "@/types/calculator";
 import { formatCurrency } from "@/lib/currency";
 import { TrendingUp, Clock, PiggyBank, Target } from "lucide-react";
@@ -12,6 +12,7 @@ import { staggerContainer, staggerItem } from "@/lib/animations";
 interface HeroMetricsProps {
   metrics: ROIMetrics;
   currency: Currency;
+  currentSpendComparison?: CurrentSpendComparison;
 }
 
 function AnimatedNumber({ value, duration = 1.2 }: { value: number; duration?: number }) {
@@ -39,7 +40,7 @@ function AnimatedNumber({ value, duration = 1.2 }: { value: number; duration?: n
   return <>{display}</>;
 }
 
-export function HeroMetrics({ metrics, currency }: HeroMetricsProps) {
+export function HeroMetrics({ metrics, currency, currentSpendComparison }: HeroMetricsProps) {
   const cards = [
     {
       title: "Total ROI",
@@ -60,7 +61,10 @@ export function HeroMetrics({ metrics, currency }: HeroMetricsProps) {
     {
       title: "3-Year Savings",
       value: formatCurrency(metrics.threeYearSavings, currency, { compact: true }),
-      description: "Total cost savings vs. custom build",
+      description:
+        currentSpendComparison?.hasCurrentSpend && currentSpendComparison.savingsPercentage > 0
+          ? `${currentSpendComparison.savingsPercentage}% less than your current spend`
+          : "Total cost savings vs. custom build",
       icon: PiggyBank,
       color: "emerald" as const,
     },

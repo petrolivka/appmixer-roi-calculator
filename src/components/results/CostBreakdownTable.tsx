@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { CustomBuildCosts, AppmixerCosts } from "@/types/results";
+import type { CustomBuildCosts, AppmixerCosts, CurrentSpendComparison } from "@/types/results";
 import type { Currency } from "@/types/calculator";
 import { formatCurrency } from "@/lib/currency";
 import { chartReveal } from "@/lib/animations";
@@ -19,14 +19,17 @@ interface CostBreakdownTableProps {
   customBuildCosts: CustomBuildCosts;
   appmixerCosts: AppmixerCosts;
   currency: Currency;
+  currentSpendComparison?: CurrentSpendComparison;
 }
 
 export function CostBreakdownTable({
   customBuildCosts,
   appmixerCosts,
   currency,
+  currentSpendComparison,
 }: CostBreakdownTableProps) {
   const fmt = (value: number) => formatCurrency(value, currency);
+  const showCurrentSpend = currentSpendComparison?.hasCurrentSpend ?? false;
 
   return (
     <motion.div
@@ -43,7 +46,48 @@ export function CostBreakdownTable({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className={`grid gap-6 ${showCurrentSpend ? "lg:grid-cols-3" : "lg:grid-cols-2"}`}>
+            {/* Current Spend (if provided) */}
+            {showCurrentSpend && currentSpendComparison && (
+              <div>
+                <h4 className="font-semibold mb-3 text-orange-600">Your Current Spend</h4>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Category</TableHead>
+                      <TableHead className="text-right">Amount</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>Annual Integration Spend</TableCell>
+                      <TableCell className="text-right">
+                        {fmt(currentSpendComparison.currentAnnualSpend)}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">&mdash;</TableCell>
+                      <TableCell className="text-right text-muted-foreground">&mdash;</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">&mdash;</TableCell>
+                      <TableCell className="text-right text-muted-foreground">&mdash;</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">&mdash;</TableCell>
+                      <TableCell className="text-right text-muted-foreground">&mdash;</TableCell>
+                    </TableRow>
+                    <TableRow className="font-bold border-t-2">
+                      <TableCell>Total (3 Years)</TableCell>
+                      <TableCell className="text-right text-orange-600">
+                        {fmt(currentSpendComparison.threeYearCurrentSpend)}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+
             {/* Custom Build Costs */}
             <div>
               <h4 className="font-semibold mb-3 text-red-600">Custom Build Costs</h4>

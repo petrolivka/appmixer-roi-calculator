@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import type { CalculationResults } from "@/types/results";
 import type { Currency } from "@/types/calculator";
 import { formatCurrency } from "@/lib/currency";
-import { TrendingUp, Clock, PiggyBank } from "lucide-react";
+import { TrendingUp, Clock, PiggyBank, ArrowDownRight } from "lucide-react";
 import { fadeInUp } from "@/lib/animations";
 
 interface PreviewPanelProps {
@@ -89,6 +89,23 @@ export function PreviewPanel({ results, currency }: PreviewPanelProps) {
               </span>
             </div>
           </div>
+
+          {results.currentSpendComparison.hasCurrentSpend && results.currentSpendComparison.savingsPercentage > 0 && (
+            <>
+              <Separator />
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/30">
+                  <ArrowDownRight className="h-5 w-5 text-orange-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">vs. Current Spend</p>
+                  <p className="text-xl font-bold text-orange-600">
+                    {results.currentSpendComparison.savingsPercentage}% less
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
 
           <div className="rounded-lg bg-muted/50 p-3 text-center">
             <p className="text-xs text-muted-foreground">

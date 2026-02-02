@@ -47,12 +47,18 @@ export default function Home() {
               custom integrations. Get personalized projections in under 5
               minutes.
             </motion.p>
-            <motion.div variants={fadeInUp}>
+            <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" variants={fadeInUp}>
               <Link
                 href="/calculator"
                 className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-primary to-rose-500 px-8 py-4 text-lg font-semibold text-primary-foreground shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:brightness-110 transition-all duration-200"
               >
-                Start Calculator
+                Full Calculator
+              </Link>
+              <Link
+                href="/calculator/quick"
+                className="inline-flex items-center justify-center rounded-lg border-2 border-primary/30 bg-white/80 dark:bg-white/5 px-8 py-4 text-lg font-semibold text-primary shadow-sm hover:border-primary/60 hover:shadow-md transition-all duration-200"
+              >
+                ⚡ Quick Estimate — 30s
               </Link>
             </motion.div>
           </motion.div>

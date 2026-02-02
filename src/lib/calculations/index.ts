@@ -4,6 +4,7 @@ import { calculateCustomBuildCosts } from "./buildCosts";
 import { calculateAppmixerCosts } from "./appmixerCosts";
 import { calculateBenefits } from "./benefits";
 import { calculateROIMetrics, generateMonthlyProjection } from "./roi";
+import { calculateCurrentSpendComparison } from "./currentSpend";
 
 export function calculateROI(inputs: CalculatorInputs): CalculationResults {
   const customBuildCosts = calculateCustomBuildCosts(inputs);
@@ -11,6 +12,7 @@ export function calculateROI(inputs: CalculatorInputs): CalculationResults {
   const benefits = calculateBenefits(inputs);
   const roiMetrics = calculateROIMetrics(customBuildCosts, appmixerCosts);
   const monthlyProjection = generateMonthlyProjection(customBuildCosts, appmixerCosts);
+  const currentSpendComparison = calculateCurrentSpendComparison(inputs, appmixerCosts);
 
   return {
     customBuildCosts,
@@ -18,6 +20,7 @@ export function calculateROI(inputs: CalculatorInputs): CalculationResults {
     benefits,
     roiMetrics,
     monthlyProjection,
+    currentSpendComparison,
   };
 }
 

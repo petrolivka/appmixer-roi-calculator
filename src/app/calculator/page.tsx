@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { WizardContainer } from "@/components/calculator/WizardContainer";
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 };
 
 export default function CalculatorPage() {
-  return <WizardContainer />;
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading calculator...</div>}>
+      <WizardContainer />
+    </Suspense>
+  );
 }

@@ -45,10 +45,22 @@ export interface MonthlyDataPoint {
   savings: number;
 }
 
+export interface CurrentSpendComparison {
+  currentAnnualSpend: number;
+  appmixerAnnualCost: number;
+  annualSavings: number;
+  savingsPercentage: number;
+  threeYearCurrentSpend: number;
+  threeYearAppmixerCost: number;
+  threeYearSavings: number;
+  hasCurrentSpend: boolean;
+}
+
 export interface CalculationResults {
   customBuildCosts: CustomBuildCosts;
   appmixerCosts: AppmixerCosts;
   benefits: BenefitBreakdown;
   roiMetrics: ROIMetrics;
   monthlyProjection: MonthlyDataPoint[];
+  currentSpendComparison: CurrentSpendComparison;
 }

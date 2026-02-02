@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
@@ -12,11 +13,13 @@ import { CompanyProfile } from "./steps/CompanyProfile";
 import { IntegrationRequirements } from "./steps/IntegrationRequirements";
 import { CurrentCosts } from "./steps/CurrentCosts";
 import { useCalculator } from "@/hooks/useCalculator";
-import { ChevronLeft, ChevronRight, BarChart3 } from "lucide-react";
+import { ChevronLeft, ChevronRight, BarChart3, Info } from "lucide-react";
 import { slideInFromRight, fadeInUp } from "@/lib/animations";
+import { buildQuickInputs } from "@/lib/constants/quickDefaults";
 
 export function WizardContainer() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const {
     state,
     results,
@@ -28,6 +31,31 @@ export function WizardContainer() {
     updateIntegrationRequirements,
     updateCurrentCosts,
   } = useCalculator();
+
+  // Check for quick mode pre-fill
+  const quickParam = searchParams.get("quick");
+  const isFromQuick = !!quickParam;
+  const [quickBannerDismissed, setQuickBannerDismissed] = useState(false);
+
+  // Apply quick defaults on first render
+  const [quickApplied, setQuickApplied] = useState(false);
+  if (quickParam && !quickApplied) {
+    try {
+      const parsed = JSON.parse(atob(quickParam));
+      const quickInputs = buildQuickInputs(
+        parsed.companySize || "mid-market",
+        parsed.numberOfIntegrations || 10,
+        parsed.integrationComplexity || "medium"
+      );
+      updateCompanyProfile(quickInputs.companyProfile);
+      updateIntegrationRequirements(quickInputs.integrationRequirements);
+      updateCurrentCosts(quickInputs.currentCosts);
+      setCurrency(quickInputs.currency);
+      setQuickApplied(true);
+    } catch {
+      setQuickApplied(true);
+    }
+  }
 
   const handleViewResults = () => {
     // Encode state in URL for sharing
@@ -95,6 +123,13 @@ export function WizardContainer() {
           <p className="text-muted-foreground">
             Calculate your potential savings with Appmixer
           </p>
+          {!isFromQuick && (
+            <p className="mt-2 text-sm">
+              <Link href="/calculator/quick" className="text-primary hover:underline font-medium">
+                Short on time? Try our 30-second quick estimate →
+              </Link>
+            </p>
+          )}
         </motion.div>
 
         <ProgressIndicator
@@ -105,6 +140,31 @@ export function WizardContainer() {
             }
           }}
         />
+
+        {/* Quick mode banner */}
+        {isFromQuick && !quickBannerDismissed && (
+          <motion.div
+            className="mb-6 rounded-lg border border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/30 p-4 flex items-start gap-3"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Info className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
+                Pre-filled from your quick estimate
+              </p>
+              <p className="text-sm text-amber-700 dark:text-amber-400">
+                Review and adjust the inputs below for a more accurate ROI calculation.
+              </p>
+            </div>
+            <button
+              onClick={() => setQuickBannerDismissed(true)}
+              className="text-amber-600 hover:text-amber-800 text-sm font-medium"
+            >
+              ✕
+            </button>
+          </motion.div>
+        )}
 
         <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
           {/* Main Form Area */}
