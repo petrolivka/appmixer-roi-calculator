@@ -113,13 +113,15 @@ export function HeroMetrics({ metrics, currency, currentSpendComparison }: HeroM
     >
       {cards.map((card) => {
         const colors = colorClasses[card.color];
+        const isRoiCard = card.title === "Total ROI";
+        const showGlow = isRoiCard && metrics.roiPercentage > 200;
         return (
           <motion.div
             key={card.title}
             variants={staggerItem}
             className=""
           >
-            <Card variant="glass" className="h-full">
+            <Card variant="glass" className={`h-full ${showGlow ? "ring-2 ring-primary/30 shadow-lg shadow-primary/20 animate-glow" : ""}`}>
               <CardContent className="p-6 h-full flex flex-col justify-between">
                 <div className="flex items-center gap-3">
                   <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${colors.bg}`}>

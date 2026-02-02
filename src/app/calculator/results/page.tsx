@@ -11,13 +11,16 @@ import { BreakEvenChart } from "@/components/results/BreakEvenChart";
 import { BenefitBreakdownChart } from "@/components/results/BenefitBreakdownChart";
 import { SensitivitySliders } from "@/components/results/SensitivitySliders";
 import { ActionButtons } from "@/components/results/ActionButtons";
+import { LeadCaptureModal } from "@/components/results/LeadCaptureModal";
 import { CostBreakdownTable } from "@/components/results/CostBreakdownTable";
 import { CurrentSpendCard } from "@/components/results/CurrentSpendCard";
+import { Celebration } from "@/components/results/Celebration";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { calculateROI } from "@/lib/calculations";
 import type { CalculatorInputs } from "@/types/calculator";
 import { defaultCalculatorInputs } from "@/types/calculator";
 import { fadeInUp } from "@/lib/animations";
+import { formatCurrency } from "@/lib/currency";
 
 function ResultsContent() {
   const searchParams = useSearchParams();
@@ -41,6 +44,7 @@ function ResultsContent() {
 
   const [inputs, setInputs] = useState<CalculatorInputs>(initialInputs);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [showLeadModal, setShowLeadModal] = useState(false);
 
   const results = useMemo(() => calculateROI(inputs), [inputs]);
 
@@ -63,10 +67,13 @@ function ResultsContent() {
     }));
   }, []);
 
+  const handleOpenLeadModal = () => {
+    setShowLeadModal(true);
+  };
+
   const handleDownloadPdf = async () => {
     setIsGeneratingPdf(true);
     try {
-      // Dynamic import to avoid SSR issues
       const { generatePdfReport } = await import("@/lib/pdf/generateReport");
       await generatePdfReport(inputs, results);
     } catch (error) {
@@ -74,20 +81,6 @@ function ResultsContent() {
       alert("PDF generation failed. Please try again.");
     } finally {
       setIsGeneratingPdf(false);
-    }
-  };
-
-  const handleShare = () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      navigator.share({
-        title: "My Appmixer ROI Calculation",
-        text: `Check out my ROI calculation: ${results.roiMetrics.roiPercentage}% ROI with ${results.roiMetrics.paybackPeriodMonths} month payback`,
-        url,
-      });
-    } else {
-      navigator.clipboard.writeText(url);
-      alert("Link copied to clipboard!");
     }
   };
 
@@ -120,6 +113,9 @@ function ResultsContent() {
             Appmixer
           </p>
         </motion.div>
+
+        {/* Celebration */}
+        <Celebration roiPercentage={results.roiMetrics.roiPercentage} trigger={true} />
 
         {/* Hero Metrics */}
         <div className="mb-10">
@@ -189,9 +185,18 @@ function ResultsContent() {
         {/* Action Buttons */}
         <div className="mt-10">
           <ActionButtons
-            onDownloadPdf={handleDownloadPdf}
-            onShare={handleShare}
+            onDownloadPdf={handleOpenLeadModal}
             isGeneratingPdf={isGeneratingPdf}
+            inputs={inputs}
+            results={results}
+          />
+
+          <LeadCaptureModal
+            open={showLeadModal}
+            onOpenChange={setShowLeadModal}
+            onDownloadPdf={handleDownloadPdf}
+            roiPercentage={results.roiMetrics.roiPercentage}
+            threeYearSavings={formatCurrency(results.roiMetrics.threeYearSavings, inputs.currency, { compact: true })}
           />
         </div>
 

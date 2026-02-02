@@ -162,10 +162,19 @@ export function CostBreakdownTable({
                       {fmt(appmixerCosts.ongoingManagement * 3)}
                     </TableCell>
                   </TableRow>
-                  <TableRow>
-                    <TableCell className="text-muted-foreground">&mdash;</TableCell>
-                    <TableCell className="text-right text-muted-foreground">&mdash;</TableCell>
-                  </TableRow>
+                  {appmixerCosts.selfHostedInfrastructure > 0 ? (
+                    <TableRow>
+                      <TableCell>Self-Hosted Infrastructure (3yr)</TableCell>
+                      <TableCell className="text-right">
+                        {fmt(appmixerCosts.selfHostedInfrastructure * 3)}
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    <TableRow>
+                      <TableCell className="text-muted-foreground">&mdash;</TableCell>
+                      <TableCell className="text-right text-muted-foreground">&mdash;</TableCell>
+                    </TableRow>
+                  )}
                   <TableRow className="font-bold border-t-2">
                     <TableCell>Total (3 Years)</TableCell>
                     <TableCell className="text-right text-blue-600">

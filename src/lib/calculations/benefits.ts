@@ -1,6 +1,6 @@
 import type { CalculatorInputs } from "@/types/calculator";
 import type { BenefitBreakdown } from "@/types/results";
-import { BENCHMARKS, COMPLEXITY_MULTIPLIERS, BASE_INTEGRATION_COST } from "@/lib/constants/benchmarks";
+import { BENCHMARKS, COMPLEXITY_MULTIPLIERS, BASE_INTEGRATION_COST, SELF_HOSTED_BENEFITS } from "@/lib/constants/benchmarks";
 
 export function calculateBenefits(inputs: CalculatorInputs): BenefitBreakdown {
   const { integrationRequirements, companyProfile, currentCosts } = inputs;
@@ -64,13 +64,24 @@ export function calculateBenefits(inputs: CalculatorInputs): BenefitBreakdown {
     dealWinRateImprovement = additionalDeals * estimatedDealValue;
   }
 
+  // 7. Compliance savings (self-hosted only)
+  let complianceSavings = 0;
+  let vendorLockInAvoidance = 0;
+  if (integrationRequirements.selfHostedRequired) {
+    complianceSavings =
+      SELF_HOSTED_BENEFITS.complianceSavings[companyProfile.industryVertical] || 0;
+    vendorLockInAvoidance = SELF_HOSTED_BENEFITS.vendorLockInAvoidance;
+  }
+
   const total =
     developmentTimeSavings +
     maintenanceReduction +
     timeToMarketValue +
     errorReduction +
     churnReduction +
-    dealWinRateImprovement;
+    dealWinRateImprovement +
+    complianceSavings +
+    vendorLockInAvoidance;
 
   return {
     developmentTimeSavings,
@@ -79,6 +90,8 @@ export function calculateBenefits(inputs: CalculatorInputs): BenefitBreakdown {
     errorReduction,
     churnReduction,
     dealWinRateImprovement,
+    complianceSavings,
+    vendorLockInAvoidance,
     total,
   };
 }

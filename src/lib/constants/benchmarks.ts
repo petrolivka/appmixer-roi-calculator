@@ -53,3 +53,31 @@ export const INFRASTRUCTURE_COSTS = {
   medium: 1000, // 50k - 500k API calls/month
   high: 2000, // > 500k API calls/month
 } as const;
+
+export const SELF_HOSTED_COSTS = {
+  // Monthly infrastructure cost for self-hosted Appmixer
+  monthlyInfrastructure: {
+    smb: 800,
+    "mid-market": 1500,
+    enterprise: 3000,
+  },
+  // Additional implementation effort multiplier for self-hosted setup
+  setupMultiplier: 1.5,
+  // Management overhead multiplier vs cloud
+  managementMultiplier: 2.5,
+} as const;
+
+export const SELF_HOSTED_BENEFITS = {
+  // Compliance cost avoidance (annual) by industry
+  complianceSavings: {
+    saas: 0,
+    fintech: 50000,
+    healthtech: 75000,
+    ecommerce: 10000,
+    logistics: 5000,
+    manufacturing: 10000,
+    other: 5000,
+  },
+  // Vendor lock-in risk avoidance (annual)
+  vendorLockInAvoidance: 15000,
+} as const;

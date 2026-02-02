@@ -107,4 +107,12 @@
       radial-gradient(ellipse 70% 50% at 50% 50%, hsl(220 70% 50% / 0.06), transparent),
       hsl(var(--background));
   }
+
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 15px 0 rgba(243, 21, 60, 0.15); }
+    50% { box-shadow: 0 0 25px 5px rgba(243, 21, 60, 0.25); }
+  }
+  .animate-glow {
+    animation: glow 2s ease-in-out 3;
+  }
 }

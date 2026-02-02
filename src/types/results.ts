@@ -17,6 +17,7 @@ export interface AppmixerCosts {
   platformSubscription: number;
   implementationCost: number;
   ongoingManagement: number;
+  selfHostedInfrastructure: number;
   yearlyBreakdown: YearlyCosts;
 }
 
@@ -27,6 +28,8 @@ export interface BenefitBreakdown {
   errorReduction: number;
   churnReduction: number;
   dealWinRateImprovement: number;
+  complianceSavings: number;
+  vendorLockInAvoidance: number;
   total: number;
 }
 

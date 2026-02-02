@@ -20,6 +20,8 @@ const COLORS = [
   "hsl(var(--chart-4))",
   "hsl(var(--chart-5))",
   "hsl(221, 83%, 63%)",
+  "hsl(262, 83%, 58%)",
+  "hsl(160, 60%, 45%)",
 ];
 
 const BENEFIT_LABELS: Record<keyof Omit<BenefitBreakdown, "total">, string> = {
@@ -29,6 +31,8 @@ const BENEFIT_LABELS: Record<keyof Omit<BenefitBreakdown, "total">, string> = {
   errorReduction: "Error Reduction",
   churnReduction: "Churn Reduction",
   dealWinRateImprovement: "Deal Win Rate",
+  complianceSavings: "Compliance Savings",
+  vendorLockInAvoidance: "Vendor Lock-In Avoidance",
 };
 
 export function BenefitBreakdownChart({ benefits, currency }: BenefitBreakdownChartProps) {
