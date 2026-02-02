@@ -454,10 +454,16 @@ function ReportDocument({ inputs, results }: ReportDocumentProps) {
                 {formatCurrency(companyProfile.developerHourlyCost, currency)}/hr
               </Text>
             </View>
-            <View style={styles.assumptionRowLast}>
+            <View style={styles.assumptionRow}>
               <Text style={styles.assumptionLabel}>End-User Facing</Text>
               <Text style={styles.assumptionValue}>
                 {integrationRequirements.endUserFacing ? "Yes" : "No"}
+              </Text>
+            </View>
+            <View style={styles.assumptionRowLast}>
+              <Text style={styles.assumptionLabel}>Appmixer Monthly Subscription</Text>
+              <Text style={styles.assumptionValue}>
+                {formatCurrency(integrationRequirements.appmixerMonthlyCost, currency)}/mo
               </Text>
             </View>
           </View>

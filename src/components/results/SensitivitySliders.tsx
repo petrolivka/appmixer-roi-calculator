@@ -33,6 +33,15 @@ export function SensitivitySliders({ inputs, onUpdate }: SensitivitySlidersProps
     });
   };
 
+  const handleSubscriptionChange = (value: number[]) => {
+    onUpdate({
+      integrationRequirements: {
+        ...integrationRequirements,
+        appmixerMonthlyCost: value[0],
+      },
+    });
+  };
+
   const complexityOptions: IntegrationComplexity[] = ["simple", "medium", "complex"];
   const complexityIndex = complexityOptions.indexOf(integrationRequirements.integrationComplexity);
 
@@ -111,6 +120,36 @@ export function SensitivitySliders({ inputs, onUpdate }: SensitivitySlidersProps
           <div className="flex justify-between text-xs text-muted-foreground">
             <span>1</span>
             <span>50</span>
+          </div>
+        </div>
+
+        {/* Appmixer Monthly Subscription */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label>Appmixer Monthly Cost</Label>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={integrationRequirements.appmixerMonthlyCost}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: 0.15 }}
+                className="text-lg font-bold"
+              >
+                {CURRENCY_SYMBOLS[inputs.currency]}{integrationRequirements.appmixerMonthlyCost}/mo
+              </motion.span>
+            </AnimatePresence>
+          </div>
+          <Slider
+            value={[integrationRequirements.appmixerMonthlyCost]}
+            onValueChange={handleSubscriptionChange}
+            min={100}
+            max={5000}
+            step={100}
+          />
+          <div className="flex justify-between text-xs text-muted-foreground">
+            <span>{CURRENCY_SYMBOLS[inputs.currency]}100</span>
+            <span>{CURRENCY_SYMBOLS[inputs.currency]}5,000</span>
           </div>
         </div>
 

@@ -181,37 +181,19 @@ export default function MethodologyPage() {
             <div className="space-y-4">
               <div className="rounded-lg border p-4">
                 <h4 className="font-semibold mb-2">Platform Subscription</h4>
-                <p className="text-sm text-muted-foreground mb-3">
-                  Based on your expected usage and requirements:
+                <p className="text-sm text-muted-foreground">
+                  Appmixer pricing is tailored to each customer based on their
+                  specific requirements, usage volume, and deployment model. In the
+                  calculator, you enter the monthly subscription cost from your
+                  custom quote. If you don&apos;t have a quote yet,{" "}
+                  <a
+                    href="https://appmixer.com/contact"
+                    className="text-primary hover:underline"
+                  >
+                    contact our sales team
+                  </a>{" "}
+                  for a personalized offer.
                 </p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left py-2">Tier</th>
-                        <th className="text-left py-2">Monthly Cost</th>
-                        <th className="text-left py-2">Included API Calls</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b">
-                        <td className="py-2">Starter</td>
-                        <td className="py-2">$499/month</td>
-                        <td className="py-2">50,000</td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="py-2">Professional</td>
-                        <td className="py-2">$999/month</td>
-                        <td className="py-2">250,000</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2">Enterprise</td>
-                        <td className="py-2">$2,499/month</td>
-                        <td className="py-2">1,000,000</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
               </div>
 
               <div className="rounded-lg border p-4">

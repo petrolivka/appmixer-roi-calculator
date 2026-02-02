@@ -1,6 +1,5 @@
 import type { CalculatorInputs } from "@/types/calculator";
 import type { AppmixerCosts, YearlyCosts } from "@/types/results";
-import { getMonthlyPlatformCost } from "@/lib/constants/pricing";
 import {
   COMPLEXITY_MULTIPLIERS,
   BASE_INTEGRATION_COST,
@@ -14,20 +13,14 @@ export function calculateAppmixerCosts(inputs: CalculatorInputs): AppmixerCosts 
   const {
     numberOfIntegrations,
     integrationComplexity,
-    expectedMonthlyApiCalls,
-    selfHostedRequired,
-    endUserFacing,
+    appmixerMonthlyCost,
   } = integrationRequirements;
   const { developerHourlyCost } = companyProfile;
 
   const complexityMultiplier = COMPLEXITY_MULTIPLIERS[integrationComplexity];
 
-  // Platform subscription: Based on pricing tier selection
-  const monthlySubscription = getMonthlyPlatformCost(
-    expectedMonthlyApiCalls,
-    selfHostedRequired,
-    endUserFacing
-  );
+  // Platform subscription: User-provided monthly cost
+  const monthlySubscription = appmixerMonthlyCost;
   const platformSubscription = monthlySubscription * 12; // Annual
 
   // Implementation time: integrations × 0.15 × complexity_factor × $15,000

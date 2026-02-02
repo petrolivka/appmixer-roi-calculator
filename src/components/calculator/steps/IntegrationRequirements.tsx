@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -11,7 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { IntegrationRequirementsInputs, IntegrationComplexity } from "@/types/calculator";
+import type { IntegrationRequirementsInputs, IntegrationComplexity, Currency } from "@/types/calculator";
+import { CURRENCY_SYMBOLS } from "@/lib/currency";
 import { HelpCircle } from "lucide-react";
 import {
   Tooltip,
@@ -23,6 +25,7 @@ import { staggerContainer, staggerItem } from "@/lib/animations";
 
 interface IntegrationRequirementsProps {
   data: IntegrationRequirementsInputs;
+  currency: Currency;
   onUpdate: (updates: Partial<IntegrationRequirementsInputs>) => void;
 }
 
@@ -32,7 +35,7 @@ const complexityOptions: { value: IntegrationComplexity; label: string; descript
   { value: "complex", label: "Complex", description: "Custom logic, multiple systems, real-time sync" },
 ];
 
-export function IntegrationRequirements({ data, onUpdate }: IntegrationRequirementsProps) {
+export function IntegrationRequirements({ data, currency, onUpdate }: IntegrationRequirementsProps) {
   return (
     <TooltipProvider>
       <motion.div
@@ -145,6 +148,50 @@ export function IntegrationRequirements({ data, onUpdate }: IntegrationRequireme
                 <SelectItem value="5000000">1,000,000+</SelectItem>
               </SelectContent>
             </Select>
+          </motion.div>
+
+          {/* Appmixer Monthly Cost */}
+          <motion.div className="space-y-2" variants={staggerItem}>
+            <div className="flex items-center gap-2">
+              <Label htmlFor="appmixerMonthlyCost">Appmixer Monthly Subscription</Label>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p>Enter the monthly subscription cost from your Appmixer quote. Don&apos;t have one yet? Contact our sales team for a custom quote.</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
+                {CURRENCY_SYMBOLS[currency]}
+              </span>
+              <Input
+                id="appmixerMonthlyCost"
+                type="number"
+                min={0}
+                step={100}
+                value={data.appmixerMonthlyCost || ""}
+                onChange={(e) => onUpdate({ appmixerMonthlyCost: parseFloat(e.target.value) || 0 })}
+                placeholder="e.g. 999"
+                className="pl-7"
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+                /month
+              </span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Don&apos;t have a quote?{" "}
+              <a
+                href="https://appmixer.com/contact"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline font-medium"
+              >
+                Contact us for custom pricing
+              </a>
+            </p>
           </motion.div>
 
           {/* Toggle Options */}

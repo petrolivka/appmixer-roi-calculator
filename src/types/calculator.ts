@@ -29,6 +29,7 @@ export interface IntegrationRequirementsInputs {
   endUserFacing: boolean;
   expectedMonthlyApiCalls: number;
   selfHostedRequired: boolean;
+  appmixerMonthlyCost: number;
 }
 
 export interface CurrentCostsInputs {
@@ -58,6 +59,7 @@ export const defaultIntegrationRequirements: IntegrationRequirementsInputs = {
   endUserFacing: true,
   expectedMonthlyApiCalls: 100000,
   selfHostedRequired: false,
+  appmixerMonthlyCost: 999,
 };
 
 export const defaultCurrentCosts: CurrentCostsInputs = {
