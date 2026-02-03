@@ -15,6 +15,7 @@ import { LeadCaptureModal } from "@/components/results/LeadCaptureModal";
 import { CostBreakdownTable } from "@/components/results/CostBreakdownTable";
 import { CurrentSpendCard } from "@/components/results/CurrentSpendCard";
 import { Celebration } from "@/components/results/Celebration";
+import { CompetitorComparison } from "@/components/results/CompetitorComparison";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { calculateROI } from "@/lib/calculations";
 import type { CalculatorInputs } from "@/types/calculator";
@@ -181,6 +182,13 @@ function ResultsContent() {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Competitor Comparison */}
+        <CompetitorComparison
+          monthlyOperations={inputs.integrationRequirements.expectedMonthlyApiCalls}
+          appmixerAnnualCost={inputs.integrationRequirements.appmixerMonthlyCost * 12}
+          currency={inputs.currency}
+        />
 
         {/* Action Buttons */}
         <div className="mt-10">
