@@ -17,7 +17,7 @@ export function calculateCustomBuildCosts(inputs: CalculatorInputs): CustomBuild
   const { integrationRequirements, companyProfile, currentCosts } = inputs;
   const { numberOfIntegrations, integrationComplexity, expectedMonthlyApiCalls } =
     integrationRequirements;
-  const { developerHourlyCost } = companyProfile;
+  const { developerHourlyCost, numberOfDevelopers } = companyProfile;
   const { devHoursOnIntegrationPerMonth } = currentCosts;
 
   const complexityMultiplier = COMPLEXITY_MULTIPLIERS[integrationComplexity];
@@ -33,9 +33,9 @@ export function calculateCustomBuildCosts(inputs: CalculatorInputs): CustomBuild
   const monthlyInfrastructure = getInfrastructureMonthlyCost(expectedMonthlyApiCalls);
   const infrastructureCosts = monthlyInfrastructure * 12; // Annual
 
-  // Developer opportunity cost: dev_hours × hourly_rate × 12 months
+  // Developer opportunity cost: dev_hours × number_of_devs × hourly_rate × 12 months
   const developerOpportunityCost =
-    devHoursOnIntegrationPerMonth * developerHourlyCost * 12;
+    devHoursOnIntegrationPerMonth * numberOfDevelopers * developerHourlyCost * 12;
 
   // Yearly breakdown
   // Year 1: Initial development + first year maintenance + infrastructure + dev time

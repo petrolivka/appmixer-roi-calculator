@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { calculateROIMetrics, generateMonthlyProjection } from './roi'
-import type { CustomBuildCosts, AppmixerCosts } from '@/types/results'
+import type { CustomBuildCosts, AppmixerCosts, BenefitBreakdown } from '@/types/results'
 
 describe('calculateROIMetrics', () => {
   const mockCustomBuildCosts: CustomBuildCosts = {
@@ -20,6 +20,7 @@ describe('calculateROIMetrics', () => {
     platformSubscription: 11988,
     implementationCost: 22500,
     ongoingManagement: 800,
+    selfHostedInfrastructure: 0,
     yearlyBreakdown: {
       year1: 35288,
       year2: 12788,
@@ -28,22 +29,34 @@ describe('calculateROIMetrics', () => {
     },
   }
 
+  const mockBenefits: BenefitBreakdown = {
+    developmentTimeSavings: 0,
+    maintenanceReduction: 0,
+    timeToMarketValue: 0,
+    errorReduction: 0,
+    churnReduction: 0,
+    dealWinRateImprovement: 0,
+    complianceSavings: 0,
+    vendorLockInAvoidance: 0,
+    total: 0,
+  }
+
   it('should calculate ROI percentage correctly', () => {
-    const result = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts)
+    const result = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, mockBenefits)
 
     // ROI = ((413700 - 60864) / 60864) × 100 = 579.8%
     expect(result.roiPercentage).toBe(580) // Rounded
   })
 
   it('should calculate 3-year savings correctly', () => {
-    const result = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts)
+    const result = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, mockBenefits)
 
     // Savings = 413700 - 60864 = 352836
     expect(result.threeYearSavings).toBe(352836)
   })
 
   it('should calculate payback period correctly', () => {
-    const result = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts)
+    const result = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, mockBenefits)
 
     // Total investment: 22500 + 11988 = 34488
     // Monthly savings: 352836 / 36 = 9801
@@ -52,7 +65,7 @@ describe('calculateROIMetrics', () => {
   })
 
   it('should calculate NPV with 10% discount rate', () => {
-    const result = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts)
+    const result = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, mockBenefits)
 
     // Year 1 savings: 237900 - 35288 = 202612
     // Year 2 savings: 87900 - 12788 = 75112
@@ -63,7 +76,7 @@ describe('calculateROIMetrics', () => {
   })
 
   it('should calculate break-even month correctly', () => {
-    const result = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts)
+    const result = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, mockBenefits)
 
     // Break-even should happen when cumulative savings >= initial investment (34488)
     // Monthly savings: ~9801
@@ -82,7 +95,7 @@ describe('calculateROIMetrics', () => {
       },
     }
 
-    const result = calculateROIMetrics(mockCustomBuildCosts, equalCosts)
+    const result = calculateROIMetrics(mockCustomBuildCosts, equalCosts, mockBenefits)
 
     expect(result.roiPercentage).toBe(0)
     expect(result.threeYearSavings).toBe(0)
@@ -100,10 +113,26 @@ describe('calculateROIMetrics', () => {
       },
     }
 
-    const result = calculateROIMetrics(mockCustomBuildCosts, expensiveAppmixer)
+    const result = calculateROIMetrics(mockCustomBuildCosts, expensiveAppmixer, mockBenefits)
 
     expect(result.roiPercentage).toBeLessThan(0)
     expect(result.threeYearSavings).toBeLessThan(0)
+  })
+
+  it('should include benefits in ROI calculation', () => {
+    const benefitsWithValue: BenefitBreakdown = {
+      ...mockBenefits,
+      churnReduction: 10000,
+      dealWinRateImprovement: 20000,
+      total: 30000,
+    }
+
+    const resultWithoutBenefits = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, mockBenefits)
+    const resultWithBenefits = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, benefitsWithValue)
+
+    // Benefits should increase savings by 30000 * 3 years = 90000
+    expect(resultWithBenefits.threeYearSavings).toBe(resultWithoutBenefits.threeYearSavings + 90000)
+    expect(resultWithBenefits.roiPercentage).toBeGreaterThan(resultWithoutBenefits.roiPercentage)
   })
 })
 
@@ -125,6 +154,7 @@ describe('generateMonthlyProjection', () => {
     platformSubscription: 12000,
     implementationCost: 24000,
     ongoingManagement: 1200,
+    selfHostedInfrastructure: 0,
     yearlyBreakdown: {
       year1: 36000,
       year2: 12000,

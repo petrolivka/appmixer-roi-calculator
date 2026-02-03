@@ -10,8 +10,8 @@ export function calculateROI(inputs: CalculatorInputs): CalculationResults {
   const customBuildCosts = calculateCustomBuildCosts(inputs);
   const appmixerCosts = calculateAppmixerCosts(inputs);
   const benefits = calculateBenefits(inputs);
-  const roiMetrics = calculateROIMetrics(customBuildCosts, appmixerCosts);
-  const monthlyProjection = generateMonthlyProjection(customBuildCosts, appmixerCosts);
+  const roiMetrics = calculateROIMetrics(customBuildCosts, appmixerCosts, benefits);
+  const monthlyProjection = generateMonthlyProjection(customBuildCosts, appmixerCosts, benefits);
   const currentSpendComparison = calculateCurrentSpendComparison(inputs, appmixerCosts);
 
   return {

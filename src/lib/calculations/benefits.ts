@@ -5,7 +5,7 @@ import { BENCHMARKS, COMPLEXITY_MULTIPLIERS, BASE_INTEGRATION_COST, SELF_HOSTED_
 export function calculateBenefits(inputs: CalculatorInputs): BenefitBreakdown {
   const { integrationRequirements, companyProfile, currentCosts } = inputs;
   const { numberOfIntegrations, integrationComplexity, endUserFacing } = integrationRequirements;
-  const { developerHourlyCost, companySize } = companyProfile;
+  const { developerHourlyCost, companySize, numberOfDevelopers } = companyProfile;
   const { devHoursOnIntegrationPerMonth, integrationIncidentsPerMonth } = currentCosts;
 
   const complexityMultiplier = COMPLEXITY_MULTIPLIERS[integrationComplexity];
@@ -19,7 +19,8 @@ export function calculateBenefits(inputs: CalculatorInputs): BenefitBreakdown {
   const developmentTimeSavings = hoursSaved * developerHourlyCost;
 
   // 2. Maintenance reduction: 60-80% reduction (using 70%)
-  const currentMaintenanceCost = devHoursOnIntegrationPerMonth * developerHourlyCost * 12;
+  // Scale by number of developers (hours are per developer)
+  const currentMaintenanceCost = devHoursOnIntegrationPerMonth * numberOfDevelopers * developerHourlyCost * 12;
   const maintenanceReduction = currentMaintenanceCost * BENCHMARKS.maintenanceReductionPercent;
 
   // 3. Time-to-market value: Months saved × monthly revenue impact
