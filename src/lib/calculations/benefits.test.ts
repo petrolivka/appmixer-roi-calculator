@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { calculateBenefits } from './benefits'
 import type { CalculatorInputs } from '@/types/calculator'
-import { BENCHMARKS } from '@/lib/constants/benchmarks'
 
 describe('calculateBenefits', () => {
   const baseInputs: CalculatorInputs = {
@@ -29,17 +28,14 @@ describe('calculateBenefits', () => {
   }
 
   describe('development time savings', () => {
-    it('should calculate development time savings at 64%', () => {
+    it('should be zero (already captured in cost comparison)', () => {
       const result = calculateBenefits(baseInputs)
-
-      // Custom build: 10 × 1.0 × 15000 = 150000
-      // Hours: 150000 / 80 = 1875
-      // Savings: 1875 × 0.64 = 1200 hours
-      // Value: 1200 × 80 = 96000
-      expect(result.developmentTimeSavings).toBe(96000)
+      // Development time savings are captured in the cost difference between
+      // custom build initialDevelopment and Appmixer implementationCost
+      expect(result.developmentTimeSavings).toBe(0)
     })
 
-    it('should scale with complexity', () => {
+    it('should remain zero regardless of complexity', () => {
       const simpleInputs: CalculatorInputs = {
         ...baseInputs,
         integrationRequirements: {
@@ -59,21 +55,20 @@ describe('calculateBenefits', () => {
       const simpleResult = calculateBenefits(simpleInputs)
       const complexResult = calculateBenefits(complexInputs)
 
-      // Complex should be 4x simple (2.0 / 0.5)
-      expect(complexResult.developmentTimeSavings).toBe(simpleResult.developmentTimeSavings * 4)
+      expect(simpleResult.developmentTimeSavings).toBe(0)
+      expect(complexResult.developmentTimeSavings).toBe(0)
     })
   })
 
   describe('maintenance reduction', () => {
-    it('should calculate maintenance reduction at 70%', () => {
+    it('should be zero (already captured in cost comparison)', () => {
       const result = calculateBenefits(baseInputs)
-
-      // Current maintenance: 40 hours/month × 80/hour × 12 = 38400
-      // Reduction: 38400 × 0.70 = 26880
-      expect(result.maintenanceReduction).toBe(26880)
+      // Maintenance reduction is captured in the cost difference between
+      // custom build developerOpportunityCost and Appmixer ongoingManagement
+      expect(result.maintenanceReduction).toBe(0)
     })
 
-    it('should scale with dev hours', () => {
+    it('should remain zero regardless of dev hours', () => {
       const inputs: CalculatorInputs = {
         ...baseInputs,
         currentCosts: {
@@ -83,21 +78,19 @@ describe('calculateBenefits', () => {
       }
 
       const result = calculateBenefits(inputs)
-
-      // Current maintenance: 80 hours/month × 80/hour × 12 = 76800
-      // Reduction: 76800 × 0.70 = 53760
-      expect(result.maintenanceReduction).toBe(53760)
+      expect(result.maintenanceReduction).toBe(0)
     })
   })
 
-  describe('time-to-market value', () => {
+  describe('time-to-market value (ONE-TIME benefit)', () => {
     it('should calculate TTM value for medium complexity, mid-market', () => {
       const result = calculateBenefits(baseInputs)
 
-      // Medium: 2 months saved
-      // Mid-market: 2x multiplier
-      // Value: 2 × 10000 × 2 = 40000
-      expect(result.timeToMarketValue).toBe(40000)
+      // Medium: 1 month saved
+      // Mid-market: 1.5x multiplier
+      // Base: $5000
+      // Value: 1 × 5000 × 1.5 = 7500
+      expect(result.timeToMarketValue).toBe(7500)
     })
 
     it('should calculate TTM value for simple complexity', () => {
@@ -111,10 +104,10 @@ describe('calculateBenefits', () => {
 
       const result = calculateBenefits(inputs)
 
-      // Simple: 1 month saved
-      // Mid-market: 2x multiplier
-      // Value: 1 × 10000 × 2 = 20000
-      expect(result.timeToMarketValue).toBe(20000)
+      // Simple: 0.5 months saved
+      // Mid-market: 1.5x multiplier
+      // Value: 0.5 × 5000 × 1.5 = 3750
+      expect(result.timeToMarketValue).toBe(3750)
     })
 
     it('should calculate TTM value for complex complexity', () => {
@@ -128,10 +121,10 @@ describe('calculateBenefits', () => {
 
       const result = calculateBenefits(inputs)
 
-      // Complex: 4 months saved
-      // Mid-market: 2x multiplier
-      // Value: 4 × 10000 × 2 = 80000
-      expect(result.timeToMarketValue).toBe(80000)
+      // Complex: 2 months saved
+      // Mid-market: 1.5x multiplier
+      // Value: 2 × 5000 × 1.5 = 15000
+      expect(result.timeToMarketValue).toBe(15000)
     })
 
     it('should scale with company size - SMB', () => {
@@ -145,10 +138,10 @@ describe('calculateBenefits', () => {
 
       const result = calculateBenefits(inputs)
 
-      // Medium: 2 months saved
+      // Medium: 1 month saved
       // SMB: 1x multiplier
-      // Value: 2 × 10000 × 1 = 20000
-      expect(result.timeToMarketValue).toBe(20000)
+      // Value: 1 × 5000 × 1 = 5000
+      expect(result.timeToMarketValue).toBe(5000)
     })
 
     it('should scale with company size - Enterprise', () => {
@@ -162,14 +155,14 @@ describe('calculateBenefits', () => {
 
       const result = calculateBenefits(inputs)
 
-      // Medium: 2 months saved
-      // Enterprise: 5x multiplier
-      // Value: 2 × 10000 × 5 = 100000
-      expect(result.timeToMarketValue).toBe(100000)
+      // Medium: 1 month saved
+      // Enterprise: 3x multiplier
+      // Value: 1 × 5000 × 3 = 15000
+      expect(result.timeToMarketValue).toBe(15000)
     })
   })
 
-  describe('error reduction', () => {
+  describe('error reduction (ANNUAL benefit)', () => {
     it('should calculate error reduction with 95% auto-handling', () => {
       const result = calculateBenefits(baseInputs)
 
@@ -197,13 +190,13 @@ describe('calculateBenefits', () => {
     })
   })
 
-  describe('churn reduction', () => {
+  describe('churn reduction (ANNUAL benefit, conservative)', () => {
     it('should calculate churn reduction for end-user facing integrations - mid-market', () => {
       const result = calculateBenefits(baseInputs)
 
-      // Mid-market estimated churn cost: 100000
-      // Reduction: 100000 × 0.40 = 40000
-      expect(result.churnReduction).toBe(40000)
+      // Mid-market estimated churn cost: 30000 (conservative)
+      // Reduction: 30000 × 0.10 = 3000 (10% attribution)
+      expect(result.churnReduction).toBe(3000)
     })
 
     it('should calculate churn reduction for SMB', () => {
@@ -217,9 +210,9 @@ describe('calculateBenefits', () => {
 
       const result = calculateBenefits(inputs)
 
-      // SMB estimated churn cost: 25000
-      // Reduction: 25000 × 0.40 = 10000
-      expect(result.churnReduction).toBe(10000)
+      // SMB estimated churn cost: 10000 (conservative)
+      // Reduction: 10000 × 0.10 = 1000
+      expect(result.churnReduction).toBe(1000)
     })
 
     it('should calculate churn reduction for enterprise', () => {
@@ -233,9 +226,9 @@ describe('calculateBenefits', () => {
 
       const result = calculateBenefits(inputs)
 
-      // Enterprise estimated churn cost: 500000
-      // Reduction: 500000 × 0.40 = 200000
-      expect(result.churnReduction).toBe(200000)
+      // Enterprise estimated churn cost: 100000 (conservative)
+      // Reduction: 100000 × 0.10 = 10000
+      expect(result.churnReduction).toBe(10000)
     })
 
     it('should be zero for non-end-user facing integrations', () => {
@@ -252,14 +245,14 @@ describe('calculateBenefits', () => {
     })
   })
 
-  describe('deal win rate improvement', () => {
+  describe('deal win rate improvement (ANNUAL benefit, conservative)', () => {
     it('should calculate deal win rate improvement for end-user facing - mid-market', () => {
       const result = calculateBenefits(baseInputs)
 
-      // Mid-market: 50 deals/year × 0.20 = 10 additional deals
-      // Deal value: 25000
-      // Value: 10 × 25000 = 250000
-      expect(result.dealWinRateImprovement).toBe(250000)
+      // Mid-market: 30 deals/year × 0.05 = 1.5 additional deals
+      // Deal value: 15000
+      // Value: 1.5 × 15000 = 22500
+      expect(result.dealWinRateImprovement).toBe(22500)
     })
 
     it('should calculate deal win rate improvement for SMB', () => {
@@ -273,10 +266,10 @@ describe('calculateBenefits', () => {
 
       const result = calculateBenefits(inputs)
 
-      // SMB: 100 deals/year × 0.20 = 20 additional deals
-      // Deal value: 5000
-      // Value: 20 × 5000 = 100000
-      expect(result.dealWinRateImprovement).toBe(100000)
+      // SMB: 50 deals/year × 0.05 = 2.5 additional deals
+      // Deal value: 3000
+      // Value: 2.5 × 3000 = 7500
+      expect(result.dealWinRateImprovement).toBe(7500)
     })
 
     it('should calculate deal win rate improvement for enterprise', () => {
@@ -290,10 +283,10 @@ describe('calculateBenefits', () => {
 
       const result = calculateBenefits(inputs)
 
-      // Enterprise: 20 deals/year × 0.20 = 4 additional deals
-      // Deal value: 100000
-      // Value: 4 × 100000 = 400000
-      expect(result.dealWinRateImprovement).toBe(400000)
+      // Enterprise: 10 deals/year × 0.05 = 0.5 additional deals
+      // Deal value: 50000
+      // Value: 0.5 × 50000 = 25000
+      expect(result.dealWinRateImprovement).toBe(25000)
     })
 
     it('should be zero for non-end-user facing integrations', () => {

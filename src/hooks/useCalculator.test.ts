@@ -328,12 +328,13 @@ describe('useCalculator', () => {
       const initialBenefits = result.current.results.benefits.total
 
       act(() => {
-        result.current.updateCurrentCosts({ devHoursOnIntegrationPerMonth: 80 })
+        // Change incidents per month - this affects errorReduction benefit
+        result.current.updateCurrentCosts({ integrationIncidentsPerMonth: 20 })
       })
 
       const newBenefits = result.current.results.benefits.total
 
-      // Benefits should change when dev hours change
+      // Benefits should change when incidents change (affects errorReduction)
       expect(newBenefits).not.toBe(initialBenefits)
     })
   })

@@ -151,9 +151,14 @@ describe('calculateROI - Integration Tests', () => {
     expect(result.benefits.churnReduction).toBe(0)
     expect(result.benefits.dealWinRateImprovement).toBe(0)
 
-    // But should still have other benefits
-    expect(result.benefits.developmentTimeSavings).toBeGreaterThan(0)
-    expect(result.benefits.maintenanceReduction).toBeGreaterThan(0)
+    // developmentTimeSavings and maintenanceReduction are now 0
+    // (captured in cost comparison, not double-counted as benefits)
+    expect(result.benefits.developmentTimeSavings).toBe(0)
+    expect(result.benefits.maintenanceReduction).toBe(0)
+
+    // But should still have time-to-market and error reduction benefits
+    expect(result.benefits.timeToMarketValue).toBeGreaterThan(0)
+    expect(result.benefits.errorReduction).toBeGreaterThanOrEqual(0)
   })
 
   it('should handle simple complexity correctly', () => {
@@ -216,9 +221,22 @@ describe('calculateROI - Integration Tests', () => {
   it('should maintain data consistency across all calculations', () => {
     const result = calculateROI(defaultCalculatorInputs)
 
-    // 3-year savings should match the difference
-    const calculatedSavings =
+    // 3-year savings = cost difference + benefits
+    // Benefits are: one-time (timeToMarket) + 3 * annual (error, churn, dealWin, compliance)
+    const costSavings =
       result.customBuildCosts.yearlyBreakdown.total - result.appmixerCosts.yearlyBreakdown.total
+    
+    // One-time benefits (timeToMarketValue)
+    const oneTimeBenefits = result.benefits.timeToMarketValue
+    // Annual benefits (everything else except devTimeSavings and maintenanceReduction which are 0)
+    const annualBenefits = 
+      result.benefits.errorReduction +
+      result.benefits.churnReduction +
+      result.benefits.dealWinRateImprovement +
+      result.benefits.complianceSavings +
+      result.benefits.vendorLockInAvoidance
+    
+    const calculatedSavings = costSavings + oneTimeBenefits + (annualBenefits * 3)
 
     expect(result.roiMetrics.threeYearSavings).toBe(calculatedSavings)
 

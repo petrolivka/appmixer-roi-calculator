@@ -39,7 +39,8 @@ describe('calculateCustomBuildCosts', () => {
     const expectedInitialDev = 10 * COMPLEXITY_MULTIPLIERS.medium * BASE_INTEGRATION_COST
     const expectedMaintenance = expectedInitialDev * MAINTENANCE_RATE
     const expectedInfra = INFRASTRUCTURE_COSTS.medium * 12
-    const expectedDevCost = 40 * 80 * 12
+    // Developer opportunity cost includes numberOfDevelopers (10)
+    const expectedDevCost = 40 * 10 * 80 * 12
 
     expect(result.initialDevelopment).toBe(expectedInitialDev)
     expect(result.annualMaintenance).toBe(expectedMaintenance)
@@ -147,11 +148,12 @@ describe('calculateCustomBuildCosts', () => {
     expect(result.infrastructureCosts).toBe(INFRASTRUCTURE_COSTS.high * 12)
   })
 
-  it('should scale developer opportunity cost with hours and hourly rate', () => {
+  it('should scale developer opportunity cost with hours, developers, and hourly rate', () => {
     const inputs: CalculatorInputs = {
       ...baseInputs,
       companyProfile: {
         ...baseInputs.companyProfile,
+        numberOfDevelopers: 5,
         developerHourlyCost: 100,
       },
       currentCosts: {
@@ -161,7 +163,8 @@ describe('calculateCustomBuildCosts', () => {
     }
 
     const result = calculateCustomBuildCosts(inputs)
-    expect(result.developerOpportunityCost).toBe(80 * 100 * 12)
+    // devHours * numberOfDevelopers * hourlyRate * 12
+    expect(result.developerOpportunityCost).toBe(80 * 5 * 100 * 12)
   })
 
   it('should handle edge case with 1 integration', () => {

@@ -52,7 +52,7 @@ const QUICK_DEFAULTS: QuickDefaults = {
   enterprise: {
     companyProfile: {
       industryVertical: "saas",
-      numberOfDevelopers: 25,
+      numberOfDevelopers: 15,  // Reduced from 25 - more realistic
       developerHourlyCost: 120,
       currentIntegrationApproach: "custom-code",
     },
@@ -66,7 +66,7 @@ const QUICK_DEFAULTS: QuickDefaults = {
     },
     currentCosts: {
       currentIntegrationSpend: 0,
-      devHoursOnIntegrationPerMonth: 80,
+      devHoursOnIntegrationPerMonth: 40,  // Reduced from 80 - more realistic
       integrationIncidentsPerMonth: 10,
     },
     currency: "USD",

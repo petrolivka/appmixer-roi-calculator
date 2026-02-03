@@ -122,17 +122,41 @@ describe('calculateROIMetrics', () => {
   it('should include benefits in ROI calculation', () => {
     const benefitsWithValue: BenefitBreakdown = {
       ...mockBenefits,
-      churnReduction: 10000,
-      dealWinRateImprovement: 20000,
+      churnReduction: 10000,       // annual
+      dealWinRateImprovement: 20000, // annual
       total: 30000,
     }
 
     const resultWithoutBenefits = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, mockBenefits)
     const resultWithBenefits = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, benefitsWithValue)
 
-    // Benefits should increase savings by 30000 * 3 years = 90000
+    // Annual benefits (30000) should be multiplied by 3 years = 90000
+    // (churnReduction and dealWinRateImprovement are annual, not one-time)
     expect(resultWithBenefits.threeYearSavings).toBe(resultWithoutBenefits.threeYearSavings + 90000)
     expect(resultWithBenefits.roiPercentage).toBeGreaterThan(resultWithoutBenefits.roiPercentage)
+  })
+
+  it('should handle one-time benefits differently from annual benefits', () => {
+    const benefitsWithOneTime: BenefitBreakdown = {
+      ...mockBenefits,
+      timeToMarketValue: 30000,  // one-time, NOT multiplied by 3
+      total: 30000,
+    }
+
+    const benefitsWithAnnual: BenefitBreakdown = {
+      ...mockBenefits,
+      errorReduction: 30000,    // annual, multiplied by 3
+      total: 30000,
+    }
+
+    const resultWithoutBenefits = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, mockBenefits)
+    const resultWithOneTime = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, benefitsWithOneTime)
+    const resultWithAnnual = calculateROIMetrics(mockCustomBuildCosts, mockAppmixerCosts, benefitsWithAnnual)
+
+    // One-time benefit adds only 30000
+    expect(resultWithOneTime.threeYearSavings).toBe(resultWithoutBenefits.threeYearSavings + 30000)
+    // Annual benefit adds 30000 * 3 = 90000
+    expect(resultWithAnnual.threeYearSavings).toBe(resultWithoutBenefits.threeYearSavings + 90000)
   })
 })
 
