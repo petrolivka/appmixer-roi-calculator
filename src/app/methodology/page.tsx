@@ -222,52 +222,154 @@ export default function MethodologyPage() {
           </CardContent>
         </Card>
 
-        {/* ROI Metrics */}
+        {/* Benefits */}
         <Card className="mb-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-primary" />
+              Quantified Benefits
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <p className="text-muted-foreground">
+              Beyond direct cost savings, we quantify additional business benefits
+              that contribute to your total ROI:
+            </p>
+
+            <div className="space-y-4">
+              <div className="rounded-lg border p-4">
+                <h4 className="font-semibold mb-2">One-Time Benefits</h4>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Realized immediately when you launch with Appmixer:
+                </p>
+                <ul className="text-sm text-muted-foreground space-y-1 ml-4 list-disc">
+                  <li>
+                    <strong>Time-to-Market Value:</strong> Revenue captured by
+                    launching faster (12× speed improvement)
+                  </li>
+                </ul>
+              </div>
+
+              <div className="rounded-lg border p-4">
+                <h4 className="font-semibold mb-2">Annual Recurring Benefits</h4>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Ongoing value realized each year (multiplied by 3 for the
+                  projection period):
+                </p>
+                <ul className="text-sm text-muted-foreground space-y-1 ml-4 list-disc">
+                  <li>
+                    <strong>Error Reduction:</strong> Cost savings from fewer
+                    integration failures and data issues
+                  </li>
+                  <li>
+                    <strong>Churn Reduction:</strong> Revenue retained through
+                    better customer experience
+                  </li>
+                  <li>
+                    <strong>Deal Win Rate Improvement:</strong> Additional revenue
+                    from winning more deals with integration capabilities
+                  </li>
+                  <li>
+                    <strong>Compliance Savings:</strong> Avoided costs from
+                    built-in security and audit capabilities
+                  </li>
+                  <li>
+                    <strong>Vendor Lock-In Avoidance:</strong> Flexibility value
+                    from portable, standard integrations
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="rounded-lg bg-muted/50 p-4">
+              <h4 className="font-semibold mb-2">Total 3-Year Benefits</h4>
+              <code className="block bg-background p-3 rounded text-sm">
+                One-Time Benefits + (Annual Benefits × 3 years)
+              </code>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* ROI Metrics */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Calculator className="h-5 w-5 text-primary" />
               ROI Metrics Formulas
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-lg border p-4">
-              <h4 className="font-semibold mb-2">ROI Percentage</h4>
+              <h4 className="font-semibold mb-2">3-Year Total Savings</h4>
               <code className="block bg-muted p-3 rounded text-sm mb-2">
-                ((Custom Build Cost - Appmixer Cost) / Appmixer Cost) × 100
+                (Custom Build Cost - Appmixer Cost) + One-Time Benefits + (Annual
+                Benefits × 3)
               </code>
               <p className="text-sm text-muted-foreground">
-                Represents the percentage return on your Appmixer investment over
-                3 years.
+                The combined value of cost avoidance plus all quantified benefits
+                over the 3-year period.
+              </p>
+            </div>
+
+            <div className="rounded-lg border p-4">
+              <h4 className="font-semibold mb-2">ROI Percentage</h4>
+              <code className="block bg-muted p-3 rounded text-sm mb-2">
+                (3-Year Total Savings / Total Appmixer Cost) × 100
+              </code>
+              <p className="text-sm text-muted-foreground">
+                Represents the percentage return on your Appmixer investment,
+                including both cost savings and quantified benefits.
               </p>
             </div>
 
             <div className="rounded-lg border p-4">
               <h4 className="font-semibold mb-2">Payback Period</h4>
               <code className="block bg-muted p-3 rounded text-sm mb-2">
-                Total Appmixer Investment / Monthly Savings
+                Net Investment / Average Monthly Savings
               </code>
-              <p className="text-sm text-muted-foreground">
-                The number of months until your savings equal your investment.
-              </p>
+              <div className="text-sm text-muted-foreground space-y-2 mt-3">
+                <p>Where:</p>
+                <ul className="ml-4 list-disc space-y-1">
+                  <li>
+                    <strong>Net Investment</strong> = Appmixer Implementation +
+                    First Year Subscription - One-Time Benefits
+                  </li>
+                  <li>
+                    <strong>Average Monthly Savings</strong> = (Cost Savings ÷ 36)
+                    + (Annual Benefits ÷ 12)
+                  </li>
+                </ul>
+                <p className="mt-2">
+                  One-time benefits (like faster time-to-market) offset your
+                  initial investment, potentially reducing payback period
+                  significantly.
+                </p>
+              </div>
             </div>
 
             <div className="rounded-lg border p-4">
               <h4 className="font-semibold mb-2">Net Present Value (NPV)</h4>
               <code className="block bg-muted p-3 rounded text-sm mb-2">
-                Σ (Annual Savings / (1 + 0.10)^year)
+                Year 1: (Cost Savings + One-Time + Annual Benefits) ÷ 1.10
+                <br />
+                Year 2: (Cost Savings + Annual Benefits) ÷ 1.10²
+                <br />
+                Year 3: (Cost Savings + Annual Benefits) ÷ 1.10³
               </code>
-              <p className="text-sm text-muted-foreground">
-                3-year savings adjusted for the time value of money at a 10%
-                discount rate.
+              <p className="text-sm text-muted-foreground mt-2">
+                3-year cash flows adjusted for the time value of money at a 10%
+                discount rate. One-time benefits are realized in Year 1 only;
+                annual benefits recur each year.
               </p>
             </div>
 
             <div className="rounded-lg border p-4">
               <h4 className="font-semibold mb-2">Break-Even Point</h4>
               <p className="text-sm text-muted-foreground">
-                The month when cumulative custom build costs exceed cumulative
-                Appmixer costs, marking when you start saving money.
+                The month when your cumulative savings (cost avoidance + benefits)
+                exceed your total Appmixer investment (implementation cost +
+                platform subscription). This marks when you&apos;ve fully
+                recovered your investment and begin realizing net positive returns.
               </p>
             </div>
           </CardContent>
