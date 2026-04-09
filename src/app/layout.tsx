@@ -31,7 +31,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${montserrat.variable} font-sans antialiased`}>{children}</body>
+      <body className={`${inter.variable} ${montserrat.variable} font-sans antialiased`}>
+        {children}
+        <footer className="py-3 text-center text-xs text-muted-foreground/50">
+          v{process.env.APP_VERSION}
+        </footer>
+      </body>
     </html>
   );
 }
