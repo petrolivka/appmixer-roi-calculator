@@ -95,7 +95,7 @@ export function BreakEvenChart({
                   type="monotone"
                   dataKey="customBuildCumulative"
                   name="Custom Build"
-                  stroke="hsl(var(--chart-5))"
+                  stroke="hsl(var(--chart-1))"
                   strokeWidth={2}
                   dot={false}
                 />
@@ -103,7 +103,7 @@ export function BreakEvenChart({
                   type="monotone"
                   dataKey="appmixerCumulative"
                   name="Appmixer"
-                  stroke="hsl(var(--chart-1))"
+                  stroke="hsl(var(--chart-2))"
                   strokeWidth={2}
                   dot={false}
                 />

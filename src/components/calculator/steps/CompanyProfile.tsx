@@ -145,10 +145,14 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
               min={1}
               max={1000}
               value={data.numberOfDevelopers}
+              className={data.numberOfDevelopers < 1 ? "border-red-400 focus-visible:ring-red-400" : ""}
               onChange={(e) =>
                 onUpdate({ numberOfDevelopers: parseInt(e.target.value) || 1 })
               }
             />
+            {data.numberOfDevelopers < 1 && (
+              <p className="text-xs text-red-500">Must be at least 1 developer</p>
+            )}
           </motion.div>
 
           {/* Developer Hourly Cost */}
@@ -173,7 +177,7 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
                 type="number"
                 min={20}
                 max={500}
-                className="pl-8"
+                className={`pl-8 ${data.developerHourlyCost < 10 ? "border-red-400 focus-visible:ring-red-400" : ""}`}
                 value={data.developerHourlyCost}
                 onChange={(e) =>
                   onUpdate({ developerHourlyCost: parseInt(e.target.value) || 80 })
@@ -183,6 +187,9 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
                 /hour
               </span>
             </div>
+            {data.developerHourlyCost < 10 && (
+              <p className="text-xs text-red-500">Hourly cost should be at least $10</p>
+            )}
           </motion.div>
 
           {/* Current Integration Approach */}
@@ -196,7 +203,7 @@ export function CompanyProfile({ data, currency, onUpdate, onCurrencyChange }: C
                   onClick={() => onUpdate({ currentIntegrationApproach: option.value })}
                   className={`flex flex-col items-start p-4 rounded-lg border-2 transition-all duration-200 text-left ${
                     data.currentIntegrationApproach === option.value
-                      ? "border-primary bg-primary/5 shadow-sm"
+                      ? "border-foreground/70 bg-foreground/5 shadow-sm"
                       : "border-muted hover:border-muted-foreground/50"
                   }`}
                 >

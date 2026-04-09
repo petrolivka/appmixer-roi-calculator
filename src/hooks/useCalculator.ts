@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, useCallback, useMemo } from "react";
+import { useReducer, useCallback, useMemo, useEffect } from "react";
 import type {
   CalculatorInputs,
   CompanyProfileInputs,
@@ -16,6 +16,8 @@ import {
 import type { CalculationResults } from "@/types/results";
 import { calculateROI } from "@/lib/calculations";
 
+const STORAGE_KEY = "appmixer-roi-calculator-state";
+
 type CalculatorStep = 1 | 2 | 3;
 
 interface CalculatorState {
@@ -24,6 +26,22 @@ interface CalculatorState {
   companyProfile: CompanyProfileInputs;
   integrationRequirements: IntegrationRequirementsInputs;
   currentCosts: CurrentCostsInputs;
+}
+
+function loadSavedState(): CalculatorState | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return null;
+    const parsed = JSON.parse(saved);
+    // Basic shape validation
+    if (parsed.companyProfile && parsed.integrationRequirements && parsed.currentCosts) {
+      return { ...parsed, currentStep: parsed.currentStep || 1 };
+    }
+    return null;
+  } catch {
+    return null;
+  }
 }
 
 type CalculatorAction =
@@ -89,7 +107,18 @@ function calculatorReducer(
 }
 
 export function useCalculator() {
-  const [state, dispatch] = useReducer(calculatorReducer, initialState);
+  const [state, dispatch] = useReducer(calculatorReducer, initialState, () => {
+    return loadSavedState() || initialState;
+  });
+
+  // Persist state to localStorage on every change
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch {
+      // localStorage might be full or unavailable
+    }
+  }, [state]);
 
   const inputs: CalculatorInputs = useMemo(
     () => ({

@@ -78,7 +78,7 @@ export function QuickCalculator() {
                 onClick={() => setCompanySize(option.value)}
                 className={`flex flex-col items-center p-4 rounded-xl border-2 transition-all duration-200 ${
                   companySize === option.value
-                    ? "border-primary bg-primary/5 shadow-md scale-[1.02]"
+                    ? "border-foreground/70 bg-foreground/5 shadow-md scale-[1.02]"
                     : "border-muted hover:border-muted-foreground/50 hover:shadow-sm"
                 }`}
               >
@@ -95,7 +95,7 @@ export function QuickCalculator() {
             <Label className="text-base font-semibold">
               Number of Integrations
             </Label>
-            <span className="text-3xl font-bold text-primary">
+            <span className="text-3xl font-bold text-foreground">
               {numberOfIntegrations}
             </span>
           </div>
@@ -125,7 +125,7 @@ export function QuickCalculator() {
                 onClick={() => setComplexity(option.value)}
                 className={`flex flex-col items-start p-4 rounded-xl border-2 transition-all duration-200 text-left ${
                   complexity === option.value
-                    ? "border-primary bg-primary/5 shadow-md scale-[1.02]"
+                    ? "border-foreground/70 bg-foreground/5 shadow-md scale-[1.02]"
                     : "border-muted hover:border-muted-foreground/50 hover:shadow-sm"
                 }`}
               >

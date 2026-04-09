@@ -14,11 +14,11 @@ interface BenefitBreakdownChartProps {
 }
 
 const COLORS = [
-  "hsl(var(--chart-1))",
-  "hsl(var(--chart-2))",
-  "hsl(var(--chart-3))",
-  "hsl(var(--chart-4))",
-  "hsl(var(--chart-5))",
+  "hsl(var(--chart-2))",  // emerald — savings
+  "hsl(var(--chart-3))",  // blue
+  "hsl(var(--chart-4))",  // purple
+  "hsl(var(--chart-1))",  // amber
+  "hsl(var(--chart-5))",  // rose
   "hsl(221, 83%, 63%)",
   "hsl(262, 83%, 58%)",
   "hsl(160, 60%, 45%)",

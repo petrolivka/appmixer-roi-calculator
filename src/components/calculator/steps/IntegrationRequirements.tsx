@@ -66,7 +66,7 @@ export function IntegrationRequirements({ data, currency, onUpdate }: Integratio
                   </TooltipContent>
                 </Tooltip>
               </div>
-              <span className="text-2xl font-bold text-primary">
+              <span className="text-2xl font-bold text-foreground">
                 {data.numberOfIntegrations}
               </span>
             </div>
@@ -105,7 +105,7 @@ export function IntegrationRequirements({ data, currency, onUpdate }: Integratio
                   onClick={() => onUpdate({ integrationComplexity: option.value })}
                   className={`flex flex-col items-start p-4 rounded-lg border-2 transition-all duration-200 text-left ${
                     data.integrationComplexity === option.value
-                      ? "border-primary bg-primary/5 shadow-sm"
+                      ? "border-foreground/70 bg-foreground/5 shadow-sm"
                       : "border-muted hover:border-muted-foreground/50"
                   }`}
                 >

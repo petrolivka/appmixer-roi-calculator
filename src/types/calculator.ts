@@ -48,13 +48,13 @@ export interface CalculatorInputs {
 export const defaultCompanyProfile: CompanyProfileInputs = {
   companySize: "mid-market",
   industryVertical: "saas",
-  numberOfDevelopers: 10,
-  developerHourlyCost: 80,
+  numberOfDevelopers: 5,
+  developerHourlyCost: 75,
   currentIntegrationApproach: "custom-code",
 };
 
 export const defaultIntegrationRequirements: IntegrationRequirementsInputs = {
-  numberOfIntegrations: 10,
+  numberOfIntegrations: 5,
   integrationComplexity: "medium",
   endUserFacing: true,
   expectedMonthlyApiCalls: 100000,
@@ -64,8 +64,8 @@ export const defaultIntegrationRequirements: IntegrationRequirementsInputs = {
 
 export const defaultCurrentCosts: CurrentCostsInputs = {
   currentIntegrationSpend: 0,
-  devHoursOnIntegrationPerMonth: 40,
-  integrationIncidentsPerMonth: 5,
+  devHoursOnIntegrationPerMonth: 20,
+  integrationIncidentsPerMonth: 3,
 };
 
 export const defaultCalculatorInputs: CalculatorInputs = {

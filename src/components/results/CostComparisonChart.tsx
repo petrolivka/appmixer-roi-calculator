@@ -79,8 +79,8 @@ export function CostComparisonChart({
                   }}
                 />
                 <Legend />
-                <Bar dataKey="Custom Build" fill="hsl(var(--chart-5))" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Appmixer" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Custom Build" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Appmixer" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -89,13 +89,13 @@ export function CostComparisonChart({
           <div className="mt-6 grid grid-cols-2 gap-4 rounded-lg bg-muted/50 p-4">
             <div>
               <p className="text-sm text-muted-foreground">Custom Build Total</p>
-              <p className="text-xl font-bold text-red-600">
+              <p className="text-xl font-bold text-amber-600">
                 {formatCurrency(customBuildCosts.yearlyBreakdown.total, currency)}
               </p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Appmixer Total</p>
-              <p className="text-xl font-bold text-blue-600">
+              <p className="text-xl font-bold text-emerald-600">
                 {formatCurrency(appmixerCosts.yearlyBreakdown.total, currency)}
               </p>
             </div>

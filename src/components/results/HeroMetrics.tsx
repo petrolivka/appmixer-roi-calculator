@@ -104,49 +104,83 @@ export function HeroMetrics({ metrics, currency, currentSpendComparison }: HeroM
     },
   };
 
+  // Primary KPI (3-Year Savings) gets a hero treatment; others are secondary
+  const primaryCard = cards[2]; // 3-Year Savings
+  const secondaryCards = [cards[0], cards[1], cards[3]];
+
   return (
     <motion.div
-      className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+      className="space-y-4"
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
     >
-      {cards.map((card) => {
-        const colors = colorClasses[card.color];
-        const isRoiCard = card.title === "Total ROI";
-        const showGlow = isRoiCard && metrics.roiPercentage > 200;
-        return (
-          <motion.div
-            key={card.title}
-            variants={staggerItem}
-            className=""
-          >
-            <Card variant="glass" className={`h-full ${showGlow ? "ring-2 ring-primary/30 shadow-lg shadow-primary/20 animate-glow" : ""}`}>
-              <CardContent className="p-6 h-full flex flex-col justify-between">
-                <div className="flex items-center gap-3">
-                  <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${colors.bg}`}>
-                    <card.icon className={`h-6 w-6 ${colors.icon}`} />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm text-muted-foreground">{card.title}</p>
-                    <p className={`text-3xl lg:text-4xl font-bold ${colors.text}`}>
-                      {card.numericValue !== undefined ? (
-                        <>
-                          <AnimatedNumber value={card.numericValue} />
-                          {card.suffix}
-                        </>
-                      ) : (
-                        card.value
-                      )}
-                    </p>
-                  </div>
+      {/* Primary KPI — large, full-width */}
+      <motion.div variants={staggerItem}>
+        <Card variant="glass" className="ring-2 ring-emerald-200 dark:ring-emerald-800 shadow-lg shadow-emerald-500/10 bg-gradient-to-r from-emerald-50/80 to-white dark:from-emerald-950/30 dark:to-card">
+          <CardContent className="p-6 sm:p-8">
+            <div className="flex items-center gap-4 sm:gap-6">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
+                <PiggyBank className="h-8 w-8 text-emerald-600" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-muted-foreground">{primaryCard.title}</p>
+                <p className="text-4xl sm:text-5xl font-bold text-gradient-emerald">
+                  {primaryCard.value}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">{primaryCard.description}</p>
+              </div>
+              <div className="hidden sm:block text-right space-y-1">
+                <div className="text-xs text-muted-foreground uppercase tracking-wide">Total ROI</div>
+                <div className="text-2xl font-bold text-foreground">
+                  {cards[0].numericValue !== undefined ? (
+                    <>
+                      <AnimatedNumber value={cards[0].numericValue} />%
+                    </>
+                  ) : cards[0].value}
                 </div>
-                <p className="mt-3 text-xs text-muted-foreground">{card.description}</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        );
-      })}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Secondary KPIs — row of 3 */}
+      <div className="grid gap-4 sm:grid-cols-3">
+        {secondaryCards.map((card) => {
+          const colors = colorClasses[card.color];
+          return (
+            <motion.div
+              key={card.title}
+              variants={staggerItem}
+            >
+              <Card variant="glass" className="h-full">
+                <CardContent className="p-5 h-full flex flex-col justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${colors.bg}`}>
+                      <card.icon className={`h-5 w-5 ${colors.icon}`} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs text-muted-foreground">{card.title}</p>
+                      <p className={`text-2xl font-bold ${colors.text}`}>
+                        {card.numericValue !== undefined ? (
+                          <>
+                            <AnimatedNumber value={card.numericValue} />
+                            {card.suffix}
+                          </>
+                        ) : (
+                          card.value
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">{card.description}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          );
+        })}
+      </div>
     </motion.div>
   );
 }

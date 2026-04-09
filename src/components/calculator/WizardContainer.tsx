@@ -214,27 +214,33 @@ export function WizardContainer() {
           </div>
         </div>
 
-        {/* Mobile Preview Summary */}
-        <div className="lg:hidden mt-6">
-          <Card className="bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Projected ROI</p>
-                  <p className="text-2xl font-bold text-primary">
-                    {results.roiMetrics.roiPercentage}%
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-muted-foreground">3-Year Savings</p>
-                  <p className="text-xl font-bold">
-                    ${(results.roiMetrics.threeYearSavings / 1000).toFixed(0)}K
-                  </p>
-                </div>
+        {/* Mobile Preview Summary — sticky bottom bar */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t bg-white/95 backdrop-blur-xl dark:bg-card/95 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
+          <div className="container mx-auto px-4 py-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-muted-foreground">Projected ROI</p>
+                <p className="text-xl font-bold text-foreground">
+                  {results.roiMetrics.roiPercentage}%
+                </p>
               </div>
-            </CardContent>
-          </Card>
+              <div className="text-center">
+                <p className="text-xs text-muted-foreground">3-Year Savings</p>
+                <p className="text-xl font-bold text-emerald-600">
+                  ${(results.roiMetrics.threeYearSavings / 1000).toFixed(0)}K
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-muted-foreground">Payback</p>
+                <p className="text-lg font-bold text-foreground">
+                  {results.roiMetrics.paybackPeriodMonths.toFixed(1)} mo
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
+        {/* Bottom spacer for sticky bar on mobile */}
+        <div className="lg:hidden h-20" />
       </div>
     </div>
   );

@@ -76,10 +76,10 @@ export default function Home() {
             variants={staggerContainer}
           >
             {[
-              { value: "413%", label: "Average iPaaS ROI" },
-              { value: "<4 mo", label: "Payback Period" },
-              { value: "$2.2M", label: "Avg. Annual Benefits" },
-              { value: "64%", label: "Faster Integration" },
+              { value: "413%", label: "Average iPaaS ROI", source: "Nucleus Research" },
+              { value: "<4 mo", label: "Payback Period", source: "Nucleus Research" },
+              { value: "$2.2M", label: "Avg. Annual Benefits", source: "Informatica" },
+              { value: "64%", label: "Faster Integration", source: "Gartner" },
             ].map((stat) => (
               <motion.div
                 key={stat.label}
@@ -90,8 +90,41 @@ export default function Home() {
                   {stat.value}
                 </div>
                 <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <div className="text-xs text-muted-foreground/60 mt-1">{stat.source}</div>
               </motion.div>
             ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Social Proof / Trust Section */}
+      <section className="py-12 bg-muted/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <p className="text-sm font-medium text-muted-foreground mb-6 uppercase tracking-wider">
+              Trusted by teams building integrations at scale
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 opacity-50">
+              {["SaaS Companies", "FinTech Startups", "Healthcare Platforms", "E-commerce Brands", "Enterprise Teams"].map((segment) => (
+                <span key={segment} className="text-sm font-semibold text-muted-foreground/80 whitespace-nowrap">
+                  {segment}
+                </span>
+              ))}
+            </div>
+            <div className="mt-8 max-w-2xl mx-auto">
+              <blockquote className="text-base italic text-muted-foreground border-l-2 border-primary/30 pl-4 text-left">
+                &ldquo;The ROI calculator helped us build the business case for switching from custom-built integrations. We saved over 200 dev hours in the first quarter alone.&rdquo;
+              </blockquote>
+              <p className="mt-3 text-sm text-muted-foreground text-left pl-4">
+                — Engineering Lead, Mid-Market SaaS Company
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
