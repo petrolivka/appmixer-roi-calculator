@@ -144,7 +144,7 @@ export default function MethodologyPage() {
               <div className="rounded-lg border p-4">
                 <h4 className="font-semibold mb-2">Developer Opportunity Cost</h4>
                 <code className="block bg-muted p-3 rounded text-sm mb-2">
-                  Monthly Dev Hours on Integration × Hourly Rate × 12 months
+                  Monthly Dev Hours on Integration × Number of Developers × Hourly Rate × 12 months
                 </code>
                 <p className="text-sm text-muted-foreground">
                   Time your developers spend maintaining and troubleshooting
@@ -211,11 +211,13 @@ export default function MethodologyPage() {
               <div className="rounded-lg border p-4">
                 <h4 className="font-semibold mb-2">Ongoing Management</h4>
                 <code className="block bg-muted p-3 rounded text-sm mb-2">
-                  Custom Maintenance Time × 10%
+                  (10 hours × Number of Integrations) × 10% × Developer Hourly Rate
                 </code>
                 <p className="text-sm text-muted-foreground">
+                  Custom maintenance is estimated at 10 hours per integration per year.
                   With Appmixer handling infrastructure, updates, and monitoring,
-                  ongoing management time is reduced by approximately 90%.
+                  ongoing management time is reduced by approximately 90% (10% of
+                  custom maintenance effort).
                 </p>
               </div>
             </div>
@@ -242,10 +244,17 @@ export default function MethodologyPage() {
                 <p className="text-sm text-muted-foreground mb-3">
                   Realized immediately when you launch with Appmixer:
                 </p>
-                <ul className="text-sm text-muted-foreground space-y-1 ml-4 list-disc">
+                <ul className="text-sm text-muted-foreground space-y-2 ml-4 list-disc">
                   <li>
                     <strong>Time-to-Market Value:</strong> Revenue captured by
-                    launching faster (12× speed improvement)
+                    launching faster. Calculated as{" "}
+                    <code className="text-xs bg-muted px-1 py-0.5 rounded">
+                      Months Saved × $5,000 × Revenue Impact Multiplier
+                    </code>
+                    , where months saved depends on complexity (Simple: 0.5,
+                    Medium: 1, Complex: 2 months) and the revenue impact
+                    multiplier scales by company size (SMB: 1×, Mid-Market: 1.5×,
+                    Enterprise: 3×).
                   </li>
                 </ul>
               </div>
@@ -256,26 +265,44 @@ export default function MethodologyPage() {
                   Ongoing value realized each year (multiplied by 3 for the
                   projection period):
                 </p>
-                <ul className="text-sm text-muted-foreground space-y-1 ml-4 list-disc">
+                <ul className="text-sm text-muted-foreground space-y-2 ml-4 list-disc">
                   <li>
                     <strong>Error Reduction:</strong> Cost savings from fewer
-                    integration failures and data issues
+                    integration failures and data issues. Calculated as{" "}
+                    <code className="text-xs bg-muted px-1 py-0.5 rounded">
+                      Monthly Incidents × 12 × 95% × $500/incident
+                    </code>
+                    , based on 95% automated error handling and an industry-average
+                    cost of $500 per incident.
                   </li>
                   <li>
-                    <strong>Churn Reduction:</strong> Revenue retained through
-                    better customer experience
+                    <strong>Churn Reduction</strong>{" "}
+                    <span className="text-xs font-medium text-primary">(end-user-facing integrations only)</span>
+                    : Revenue retained through better customer experience.
+                    Uses conservative estimated churn costs (SMB: $10k, Mid-Market:
+                    $30k, Enterprise: $100k) with a 10% attribution factor — only
+                    a fraction of churn reduction is attributed to integration
+                    improvements.
                   </li>
                   <li>
-                    <strong>Deal Win Rate Improvement:</strong> Additional revenue
-                    from winning more deals with integration capabilities
+                    <strong>Deal Win Rate Improvement</strong>{" "}
+                    <span className="text-xs font-medium text-primary">(end-user-facing integrations only)</span>
+                    : Additional revenue from winning more deals with integration
+                    capabilities. Uses conservative deal values (SMB: $3k,
+                    Mid-Market: $15k, Enterprise: $50k) with a 5% attribution
+                    factor applied to estimated annual deals.
                   </li>
                   <li>
-                    <strong>Compliance Savings:</strong> Avoided costs from
-                    built-in security and audit capabilities
+                    <strong>Compliance Savings</strong>{" "}
+                    <span className="text-xs font-medium text-primary">(self-hosted deployments only)</span>
+                    : Avoided costs from built-in security and audit capabilities.
+                    Amount varies by industry vertical.
                   </li>
                   <li>
-                    <strong>Vendor Lock-In Avoidance:</strong> Flexibility value
-                    from portable, standard integrations
+                    <strong>Vendor Lock-In Avoidance</strong>{" "}
+                    <span className="text-xs font-medium text-primary">(self-hosted deployments only)</span>
+                    : Flexibility value from portable, standard integrations.
+                    Estimated at $15,000 annually.
                   </li>
                 </ul>
               </div>
@@ -367,9 +394,10 @@ export default function MethodologyPage() {
               <h4 className="font-semibold mb-2">Break-Even Point</h4>
               <p className="text-sm text-muted-foreground">
                 The month when your cumulative savings (cost avoidance + benefits)
-                exceed your total Appmixer investment (implementation cost +
-                platform subscription). This marks when you&apos;ve fully
-                recovered your investment and begin realizing net positive returns.
+                exceed your initial Appmixer investment (implementation cost +
+                first year platform subscription). This marks when you&apos;ve
+                fully recovered your upfront investment and begin realizing net
+                positive returns.
               </p>
             </div>
           </CardContent>
